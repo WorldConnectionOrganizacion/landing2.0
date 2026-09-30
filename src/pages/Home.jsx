@@ -8,6 +8,7 @@ import CtaBanner from '../components/CtaBanner.jsx'
 import Differentiators from '../components/Differentiators.jsx'
 import Careers from '../components/Careers.jsx'
 import History from '../components/History.jsx'
+import News from '../components/News.jsx'
 import Contact from '../components/Contact.jsx'
 import useScrollReveal from '../hooks/useScrollReveal.js'
 
@@ -25,6 +26,7 @@ export default function Home() {
       <Differentiators />
       <Careers />
       <History />
+      <News />
       <Contact />
     </main>
   )
