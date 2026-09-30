@@ -1093,6 +1093,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-bottom: 16px;
 }
 .news-card__more {
   margin-top: auto;
@@ -1103,7 +1104,6 @@
   font-size: 0.9rem;
   font-weight: 600;
 }
-.news-card__text + .news-card__more { margin-top: 16px; }
 .news__nav {
   position: absolute;
   top: 50%;
