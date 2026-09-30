@@ -115,3 +115,14 @@
 .adm-switch.is-on { color: var(--blue); }
 .adm-switch:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 2px; border-radius: 6px; }
 .adm-block__tools { align-items: center; }
+
+/* Categoría: sugerencias como botones (sin flecha nativa del datalist) */
+.adm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.adm-chip {
+  font-family: var(--font-head); font-size: 0.75rem; font-weight: 600;
+  padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--white); color: var(--slate);
+}
+.adm-chip:hover:not(:disabled) { background: var(--cyan-soft); color: var(--blue); }
+.adm-chip.is-active { background: var(--cyan-soft); border-color: var(--cyan); color: var(--blue); }
+.adm-chip:disabled { opacity: 0.5; cursor: not-allowed; }

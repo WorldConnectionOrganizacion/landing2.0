@@ -160,15 +160,24 @@ export default function PostEditor() {
           </div>
           <input
             id="f-category"
-            list="adm-categories"
             value={form.category}
             onChange={(e) => set({ category: e.target.value })}
             maxLength={40}
             disabled={!isShown('category')}
           />
-          <datalist id="adm-categories">
-            {CATEGORIES.map((c) => <option key={c} value={c} />)}
-          </datalist>
+          <div className="adm-chips">
+            {CATEGORIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={`adm-chip ${form.category === c ? 'is-active' : ''}`}
+                disabled={!isShown('category')}
+                onClick={() => set({ category: c })}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className={`adm-field ${isShown('date') ? '' : 'is-off'}`}>

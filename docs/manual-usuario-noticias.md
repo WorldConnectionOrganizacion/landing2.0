@@ -114,7 +114,7 @@ Para volver al listado, tocá **← Volver**. Ojo: si volvés sin guardar, se pi
 
 ### Categoría
 - Es la etiqueta que aparece arriba de cada tarjeta y de la noticia (por ejemplo **NOTICIAS**).
-- El campo sugiere dos valores: **Noticias** y **Comunicados de prensa**, pero podés escribir otra (hasta 40 caracteres).
+- Debajo del campo hay dos botones de atajo, **Noticias** y **Comunicados de prensa**: tocá uno para completarlo. También podés escribir otra categoría (hasta 40 caracteres).
 - Si la dejás vacía, se usa "Noticias".
 - **Consistencia:** escribí siempre igual el nombre ("Eventos", no "eventos" o "Evento"), porque cada variante se muestra como una etiqueta distinta.
 
