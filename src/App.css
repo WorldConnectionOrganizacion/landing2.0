@@ -1222,3 +1222,14 @@
   .pager__num { width: 36px; height: 36px; }
 }
 .post__narrow > .news-card__tag { display: block; width: fit-content; }
+
+/* Instagram: tarjeta vertical, centrada */
+.post__ig { display: flex; justify-content: center; margin: 28px 0; }
+.post__ig iframe {
+  width: 100%;
+  max-width: 540px;
+  height: 700px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}

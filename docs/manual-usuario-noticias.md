@@ -172,7 +172,7 @@ Cada bloque tiene tres botones arriba a la derecha:
 ### Bloque de video
 - Pegá el **link** del video (ver [sección 8](#8-guía-de-videos)). No se suben archivos de video al panel.
 - Si el link es reconocido, el video se ve incrustado en la noticia.
-- Si el link no se reconoce, verás el aviso **"Link no reconocido: se mostrará como botón 'Ver video'"**. El visitante verá un botón que abre el link en otra pestaña.
+- Si el link no se reconoce (por ejemplo TikTok o Facebook), verás el aviso **"Link no reconocido: se mostrará como botón 'Ver video'"**. El visitante verá un botón que abre el link en otra pestaña.
 
 ### Ejemplo de estructura recomendada
 
@@ -247,7 +247,7 @@ Por eso:
 
 ### Cómo funciona
 
-Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo**, y en la noticia se pega el **link**. Así el sitio no se hace lento y no ocupa espacio propio.
+Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo** (o se usa un reel de **Instagram** ya publicado), y en la noticia se pega el **link**. Así el sitio no se hace lento y no ocupa espacio propio.
 
 ### Plataformas compatibles
 
@@ -255,9 +255,26 @@ Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo**,
 |---|---|---|
 | **YouTube** | `https://www.youtube.com/watch?v=XXXX`<br>`https://youtu.be/XXXX`<br>`https://www.youtube.com/shorts/XXXX` | Video incrustado |
 | **Vimeo** | `https://vimeo.com/123456789` | Video incrustado |
-| Otras (Facebook, Instagram, TikTok, Drive, etc.) | Cualquier link `https://...` | **Solo un botón "Ver video"** que abre el link en otra pestaña |
+| **Instagram** | `https://www.instagram.com/reel/XXXX/`<br>`https://www.instagram.com/p/XXXX/`<br>`https://www.instagram.com/tv/XXXX/` | Publicación incrustada (ver más abajo) |
+| Otras (Facebook, TikTok, Drive, etc.) | Cualquier link `https://...` | **Solo un botón "Ver video"** que abre el link en otra pestaña |
 
 El link debe empezar con `https://`.
+
+### Videos de Instagram
+
+Se pueden usar links de **Reels** y de **publicaciones** de Instagram. Funcionan así:
+
+1. En Instagram, abrí el reel o la publicación, tocá los tres puntos (**…**) o **Compartir**, y elegí **Copiar link**.
+2. En la noticia, tocá **+ Video** y pegá el link. Los parámetros extra que agrega Instagram (`?igsh=...`) no molestan.
+3. En la web se muestra la **tarjeta de Instagram** dentro de la noticia, centrada y en formato vertical (hasta 540 px de ancho), con el video y su descripción.
+
+Tené en cuenta:
+
+- La cuenta que publicó tiene que ser **pública**. Si es privada, o la publicación se borra, el visitante verá un error o un pedido de inicio de sesión.
+- Instagram controla cómo se ve esa tarjeta: el diseño, los botones ("Ver en Instagram") y la descripción son suyos, no del sitio.
+- Un link a un **perfil** (por ejemplo `instagram.com/worldconnection`) no se puede incrustar: hace falta el link de un reel o una publicación concreta. En ese caso se mostrará solo el botón "Ver video".
+- Las **historias** (stories) no se pueden incrustar.
+- Si Instagram cambia sus reglas o el visitante tiene bloqueadores de contenido, la tarjeta puede no cargar. Si el video es importante, subilo además a YouTube.
 
 ### Cómo cargar un video paso a paso
 
@@ -284,7 +301,7 @@ Lo que subas a YouTube o Vimeo:
 | Cuadros por segundo | Los originales (24, 25, 30 o 60) |
 | Audio | AAC |
 
-- Los videos **verticales** (como los de celular o los Shorts) se muestran dentro de un marco horizontal 16:9, con franjas a los costados. Se ven, pero más chicos. Si es posible, grabá en horizontal.
+- Los videos **verticales** subidos a YouTube o Vimeo (como los de celular o los Shorts) se muestran dentro de un marco horizontal 16:9, con franjas a los costados. Se ven, pero más chicos. Si es posible, grabá en horizontal. Los de **Instagram** sí se muestran en su formato vertical.
 - Un video de **1 a 3 minutos** funciona mejor para noticias.
 
 ### Dónde va el video
@@ -412,7 +429,8 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 | "No se pudo subir la imagen" | Falla de conexión o problema del servicio | Reintentá; si persiste, avisá a quien administra el sistema |
 | "Ya existe una noticia con ese slug" | Otro contenido tiene la misma dirección | Cambiá el slug o el título |
 | "El título es obligatorio" | Título vacío | Completalo |
-| "Link no reconocido" en un video | El link no es de YouTube ni Vimeo | Usá un link de esas plataformas, o aceptá que se muestre como botón |
+| "Link no reconocido" en un video | El link no es de YouTube, Vimeo ni Instagram, o es el de un perfil | Usá el link de un video o reel concreto, o aceptá que se muestre como botón |
+| El reel de Instagram pide iniciar sesión o da error | La cuenta es privada o la publicación se borró | Verificá que la cuenta sea pública, o subí el video a YouTube |
 | El video incrustado muestra error | El video es privado o no permite incrustarse | Cambiá su visibilidad a Público o No listado y revisá que permita incrustar |
 | Guardé pero en el sitio no aparece | Está como borrador, o el navegador guarda una copia vieja | Marcá **Publicada**. Recargá con `Ctrl + F5` |
 | La noticia está publicada pero no sale en el carrusel | No está entre las 6 más recientes por fecha | Se ve igual en `/noticias`. Revisá la fecha de publicación |
@@ -430,7 +448,7 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 - **No hay papelera ni deshacer.** Borrar es definitivo.
 - **No hay programación de publicaciones** (fecha y hora futura automática).
 - **El texto es plano:** sin negritas, títulos internos ni links clickeables.
-- **No se suben archivos de video**, solo links de YouTube o Vimeo.
+- **No se suben archivos de video**, solo links de YouTube, Vimeo o Instagram (otras plataformas se muestran como botón).
 - **No hay comentarios de los visitantes** en las noticias.
 - **Límites técnicos:** título 200 caracteres, extracto 500, categoría 40, pie de imagen 300, texto 20.000 por bloque, hasta 100 bloques por noticia, imágenes de hasta 5 MB.
 
@@ -496,6 +514,6 @@ Para exponerlo en la red local: `npm run dev -- --host`.
 **Cifras clave**
 
 - Imágenes: **JPG, PNG, WebP o GIF, hasta 5 MB**. Portada **1600 × 900 px** horizontal. Ideal menos de **500 KB**.
-- Videos: **link de YouTube o Vimeo**, video público o no listado, **MP4 H.264 1080p 16:9**.
+- Videos: **link de YouTube, Vimeo o Instagram (reel o publicación pública)**, video público o no listado, **MP4 H.264 1080p 16:9**.
 - Carrusel de inicio: **6 noticias más recientes**. Listado: **9 por página**.
 - Sesión: **8 horas**. Bloqueo por intentos fallidos: **15 minutos**.

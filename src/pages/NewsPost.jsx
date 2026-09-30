@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPostBySlug, formatDate } from '../lib/posts.js'
-import { toEmbedUrl } from '../lib/video.js'
+import { parseEmbed } from '../lib/video.js'
 
 function Block({ block }) {
   if (block.type === 'text') {
@@ -25,11 +25,18 @@ function Block({ block }) {
     )
   }
   if (block.type === 'video' && block.url) {
-    const embed = toEmbedUrl(block.url)
+    const embed = parseEmbed(block.url)
+    if (embed?.kind === 'instagram') {
+      return (
+        <div className="post__ig">
+          <iframe src={embed.src} title="Publicación de Instagram" loading="lazy" allowFullScreen />
+        </div>
+      )
+    }
     return embed ? (
       <div className="post__video">
         <iframe
-          src={embed}
+          src={embed.src}
           title="Video"
           loading="lazy"
           allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
