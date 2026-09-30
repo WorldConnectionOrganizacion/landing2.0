@@ -1,11 +1,8 @@
-const navLinks = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Trabajá con nosotros', href: '#trabaja' },
-]
+import { Link } from 'react-router-dom'
+import useNavLinks from '../hooks/useNavLinks.js'
 
 export default function Footer() {
+  const navLinks = useNavLinks()
   return (
     <footer className="footer">
       <div className="container footer__grid">
@@ -23,8 +20,8 @@ export default function Footer() {
           <h4>Navegación</h4>
           <ul>
             {navLinks.map((l) => (
-              <li key={l.href}>
-                <a href={l.href}>{l.label}</a>
+              <li key={l.label}>
+                <Link to={l.to}>{l.label}</Link>
               </li>
             ))}
           </ul>

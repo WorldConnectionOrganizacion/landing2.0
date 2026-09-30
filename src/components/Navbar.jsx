@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react'
-
-const links = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Trabajá con nosotros', href: '#trabaja' },
-]
+import { Link } from 'react-router-dom'
+import { contactLink } from '../data/navLinks.js'
+import useNavLinks from '../hooks/useNavLinks.js'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const navLinks = useNavLinks()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -26,19 +23,19 @@ export default function Navbar() {
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
-        <a href="#inicio" className="nav__brand" onClick={() => setOpen(false)}>
+        <Link to={navLinks[0].to} className="nav__brand" onClick={() => setOpen(false)}>
           <img src="/logo-header.png" alt="World Connection" className="nav__brand-img" />
-        </a>
+        </Link>
 
         <nav className={`nav__menu ${open ? 'is-open' : ''}`}>
-          {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+          {navLinks.map((l) => (
+            <Link key={l.label} to={l.to} onClick={() => setOpen(false)}>
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a href="#contacto" className="btn btn--primary btn--sm nav__cta" onClick={() => setOpen(false)}>
+          <Link to={contactLink} className="btn btn--primary btn--sm nav__cta" onClick={() => setOpen(false)}>
             Contactanos
-          </a>
+          </Link>
         </nav>
 
         <button

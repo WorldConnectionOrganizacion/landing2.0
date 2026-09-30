@@ -1,40 +1,46 @@
+import { lazy, Suspense } from 'react'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
-import Hero from './components/Hero.jsx'
-import About from './components/About.jsx'
-import Stats from './components/Stats.jsx'
-// import Clients from './components/Clients.jsx' // Oculto por el momento — probablemente se use en el futuro
-import Services from './components/Services.jsx'
-import WhyUs from './components/WhyUs.jsx'
-import CtaBanner from './components/CtaBanner.jsx'
-import Differentiators from './components/Differentiators.jsx'
-import Careers from './components/Careers.jsx'
-import History from './components/History.jsx'
-import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
-import useScrollReveal from './hooks/useScrollReveal.js'
+import ScrollManager from './components/ScrollManager.jsx'
+import Home from './pages/Home.jsx'
+import NewsList from './pages/NewsList.jsx'
+import NewsPost from './pages/NewsPost.jsx'
 import './App.css'
 
-export default function App() {
-  useScrollReveal()
+// El panel se carga aparte: no pesa en la landing pública.
+const Admin = lazy(() => import('./admin/Admin.jsx'))
+
+function SiteLayout() {
   return (
     <>
+      <ScrollManager />
       <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Stats />
-        {/* <Clients /> */} {/* Oculto por el momento — probablemente se use en el futuro */}
-        <Services />
-        <WhyUs />
-        <CtaBanner />
-        <Differentiators />
-        <Careers />
-        <History />
-        <Contact />
-      </main>
+      <Outlet />
       <Footer />
       <WhatsAppButton />
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<SiteLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/noticias" element={<NewsList />} />
+        <Route path="/noticias/:slug" element={<NewsPost />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+      <Route
+        path="/paginas-admin/*"
+        element={
+          <Suspense fallback={null}>
+            <Admin />
+          </Suspense>
+        }
+      />
+    </Routes>
   )
 }
