@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
@@ -8,19 +9,38 @@ import NewsList from './pages/NewsList.jsx'
 import NewsPost from './pages/NewsPost.jsx'
 import './App.css'
 
-export default function App() {
+// El panel se carga aparte: no pesa en la landing pública.
+const Admin = lazy(() => import('./admin/Admin.jsx'))
+
+function SiteLayout() {
   return (
     <>
       <ScrollManager />
       <Navbar />
-      <Routes>
+      <Outlet />
+      <Footer />
+      <WhatsAppButton />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/noticias" element={<NewsList />} />
         <Route path="/noticias/:slug" element={<NewsPost />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      <Footer />
-      <WhatsAppButton />
-    </>
+      </Route>
+      <Route
+        path="/paginas-admin/*"
+        element={
+          <Suspense fallback={null}>
+            <Admin />
+          </Suspense>
+        }
+      />
+    </Routes>
   )
 }
