@@ -1,9 +1,5 @@
-const navLinks = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Trabajá con nosotros', href: '#trabaja' },
-]
+import { Link } from 'react-router-dom'
+import { navLinks } from '../data/navLinks.js'
 
 export default function Footer() {
   return (
@@ -23,8 +19,8 @@ export default function Footer() {
           <h4>Navegación</h4>
           <ul>
             {navLinks.map((l) => (
-              <li key={l.href}>
-                <a href={l.href}>{l.label}</a>
+              <li key={l.label}>
+                <Link to={l.to}>{l.label}</Link>
               </li>
             ))}
           </ul>
