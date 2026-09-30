@@ -86,3 +86,4 @@
   .adm-grid { grid-template-columns: 1fr; }
   .adm-main { padding: 20px 16px 80px; }
 }
+.adm-bar__right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }

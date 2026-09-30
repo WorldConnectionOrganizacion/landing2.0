@@ -21,6 +21,22 @@ export default function PostList() {
     api.list().then(setPosts).catch(handle)
   }, [handle])
 
+  const [note, setNote] = useState('')
+
+  const cleanup = async () => {
+    setNote('')
+    setError('')
+    try {
+      const { count } = await api.cleanup(true)
+      if (!count) return setNote('No hay imágenes sin usar.')
+      if (!window.confirm(`Hay ${count} imagen(es) sin usar. ¿Borrarlas definitivamente?`)) return
+      const done = await api.cleanup(false)
+      setNote(`Se borraron ${done.count} imagen(es).`)
+    } catch (err) {
+      handle(err)
+    }
+  }
+
   const remove = async (post) => {
     if (!window.confirm(`¿Borrar "${post.title}"? Esta acción no se puede deshacer.`)) return
     try {
@@ -35,8 +51,14 @@ export default function PostList() {
     <>
       <div className="adm-bar">
         <h1 className="adm-title">Noticias</h1>
-        <Link to="nueva" className="btn btn--primary btn--sm">+ Nueva noticia</Link>
+        <div className="adm-bar__right">
+          <button type="button" className="adm-btn adm-btn--ghost" onClick={cleanup}>
+            Limpiar imágenes sin usar
+          </button>
+          <Link to="nueva" className="btn btn--primary btn--sm">+ Nueva noticia</Link>
+        </div>
       </div>
+      {note && <p className="adm-ok">{note}</p>}
 
       {error && <p className="adm-error" role="alert">{error}</p>}
       {!posts && !error && <p className="adm-muted">Cargando…</p>}

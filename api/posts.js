@@ -1,6 +1,7 @@
 import { requireAdmin } from './_lib/auth.js'
 import { supabaseAdmin } from './_lib/supabaseAdmin.js'
 import { validatePost } from './_lib/validatePost.js'
+import { pathsOfPost, removeUnreferenced } from './_lib/media.js'
 
 const UUID = /^[0-9a-f-]{36}$/i
 
@@ -49,15 +50,22 @@ export default async function handler(req, res) {
     const { value, error: msg } = validatePost(req.body, { partial: true })
     if (msg) return res.status(400).json({ error: msg })
     if (!Object.keys(value).length) return res.status(400).json({ error: 'Nada para actualizar' })
+    const { data: before } = await db.from('posts').select('cover_url, blocks').eq('id', id).maybeSingle()
     const { data, error } = await db.from('posts').update(value).eq('id', id).select().maybeSingle()
     if (error) return fail(res, error)
-    return data ? res.status(200).json(data) : res.status(404).json({ error: 'No encontrada' })
+    if (!data) return res.status(404).json({ error: 'No encontrada' })
+    // Imágenes que la noticia usaba y ya no (quitadas o reemplazadas).
+    const now = pathsOfPost(data)
+    await removeUnreferenced(db, [...pathsOfPost(before)].filter((p) => !now.has(p)))
+    return res.status(200).json(data)
   }
 
   if (req.method === 'DELETE') {
     if (!id) return res.status(400).json({ error: 'Falta id' })
+    const { data: before } = await db.from('posts').select('cover_url, blocks').eq('id', id).maybeSingle()
     const { error } = await db.from('posts').delete().eq('id', id)
     if (error) return fail(res, error)
+    await removeUnreferenced(db, pathsOfPost(before))
     return res.status(200).json({ ok: true })
   }
 

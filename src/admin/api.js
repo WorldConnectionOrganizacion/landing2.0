@@ -31,6 +31,7 @@ export const api = {
   get: (id) => request(`posts?id=${id}`),
   create: (post) => request('posts', { method: 'POST', body: post }),
   update: (id, post) => request(`posts?id=${id}`, { method: 'PUT', body: post }),
+  cleanup: (dryRun) => request('cleanup', { method: 'POST', body: { dryRun } }),
   remove: (id) => request(`posts?id=${id}`, { method: 'DELETE' }),
 }
 
