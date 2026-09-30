@@ -20,16 +20,21 @@ const isHttpsUrl = (v) => {
 
 const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
 
+// Partes de la noticia que se pueden ocultar en la web.
+export const HIDEABLE = ['cover', 'excerpt', 'category', 'date']
+
 function cleanBlock(b) {
   if (!b || typeof b !== 'object') throw new Error('Bloque inválido')
-  if (b.type === 'text') return { type: 'text', text: str(b.text, 20000) }
+  // `hidden`: el bloque se conserva en el panel pero no se muestra en la web.
+  const hidden = b.hidden ? { hidden: true } : {}
+  if (b.type === 'text') return { type: 'text', text: str(b.text, 20000), ...hidden }
   if (b.type === 'image') {
     if (!isHttpsUrl(b.url)) throw new Error('Imagen con URL inválida')
-    return { type: 'image', url: b.url, caption: str(b.caption, 300) }
+    return { type: 'image', url: b.url, caption: str(b.caption, 300), ...hidden }
   }
   if (b.type === 'video') {
     if (!isHttpsUrl(b.url)) throw new Error('Video con URL inválida')
-    return { type: 'video', url: b.url }
+    return { type: 'video', url: b.url, ...hidden }
   }
   throw new Error('Tipo de bloque desconocido')
 }
@@ -66,6 +71,10 @@ export function validatePost(body, { partial = false } = {}) {
     } catch (e) {
       return { error: e.message }
     }
+  }
+  if (has('hidden_fields')) {
+    if (!Array.isArray(body.hidden_fields)) return { error: 'Campos ocultos inválidos' }
+    out.hidden_fields = [...new Set(body.hidden_fields.filter((f) => HIDEABLE.includes(f)))]
   }
   if (has('published')) out.published = Boolean(body.published)
   if (has('published_at')) {

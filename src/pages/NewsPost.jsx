@@ -4,6 +4,7 @@ import { fetchPostBySlug, formatDate } from '../lib/posts.js'
 import { parseEmbed } from '../lib/video.js'
 
 function Block({ block }) {
+  if (block.hidden) return null
   if (block.type === 'text') {
     return (
       <div className="post__text">
@@ -100,20 +101,30 @@ export default function NewsPost() {
     )
   }
 
+  const hidden = post.hidden_fields || []
+  const show = {
+    category: !hidden.includes('category') && post.category,
+    cover: !hidden.includes('cover') && post.cover_url,
+    date: !hidden.includes('date'),
+    excerpt: !hidden.includes('excerpt') && post.excerpt,
+  }
+
   return (
     <main className="page-top">
       <article className="section post">
         <div className="container post__narrow">
           <Link to="/noticias" className="btn btn--link post__back">← Todas las noticias</Link>
-          <span className="news-card__tag">{post.category}</span>
-          <h1 className="post__title">{post.title}</h1>
-          <time className="post__date" dateTime={post.published_at}>
-            {formatDate(post.published_at)}
-          </time>
-          {post.cover_url && (
-            <img src={post.cover_url} alt="" className="post__cover" />
-          )}
-          {post.excerpt && <p className="lead post__lead">{post.excerpt}</p>}
+          <header className="post__head">
+            {show.category && <span className="news-card__tag">{post.category}</span>}
+            <h1 className="post__title">{post.title}</h1>
+            {show.date && (
+              <time className="post__date" dateTime={post.published_at}>
+                {formatDate(post.published_at)}
+              </time>
+            )}
+          </header>
+          {show.cover && <img src={post.cover_url} alt="" className="post__cover" />}
+          {show.excerpt && <p className="lead post__lead">{post.excerpt}</p>}
           {(post.blocks || []).map((b, i) => (
             <Block key={i} block={b} />
           ))}

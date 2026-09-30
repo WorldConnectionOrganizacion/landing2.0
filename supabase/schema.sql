@@ -50,3 +50,7 @@ update storage.buckets
 set file_size_limit = 5242880,
     allowed_mime_types = array['image/jpeg','image/png','image/webp','image/gif']
 where id = 'news-media';
+
+-- Partes de la noticia que NO se muestran en la web (ej. {cover,excerpt}). Valores: cover | excerpt | category | date.
+alter table public.posts
+  add column if not exists hidden_fields text[] not null default '{}';

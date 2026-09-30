@@ -1149,12 +1149,18 @@
 
 .post__narrow { max-width: 780px; }
 .post__back { display: flex; width: fit-content; margin-bottom: 20px; }
+.post__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 28px;
+}
 .post__title {
   font-size: clamp(1.9rem, 4vw, 2.8rem);
   letter-spacing: -0.02em;
-  margin: 14px 0 10px;
 }
-.post__date { display: block; color: var(--slate); font-size: 0.9rem; margin-bottom: 28px; }
+.post__date { color: var(--slate); font-size: 0.9rem; }
 .post__cover {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1221,7 +1227,6 @@
   .pager__btn { padding: 10px 14px; }
   .pager__num { width: 36px; height: 36px; }
 }
-.post__narrow > .news-card__tag { display: block; width: fit-content; }
 
 /* Instagram: tarjeta vertical, centrada */
 .post__ig { display: flex; justify-content: center; margin: 28px 0; }

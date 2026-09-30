@@ -87,3 +87,31 @@
   .adm-main { padding: 20px 16px 80px; }
 }
 .adm-bar__right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* Campos ocultables */
+.adm-field__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.adm-field__head > label, .adm-field__head > span { font-size: 0.85rem; font-weight: 600; color: var(--slate); }
+.adm-hint { font-size: 0.8rem; color: var(--slate); }
+.adm-field.is-off input, .adm-field.is-off textarea, .adm-field.is-off .adm-image__preview,
+.adm-block.is-off > *:not(.adm-block__head) { opacity: 0.45; }
+.adm-field.is-off input:disabled, .adm-field.is-off textarea:disabled { background: var(--bg-soft); cursor: not-allowed; }
+.adm-block.is-off { border-style: dashed; }
+.adm-switch {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  background: none; border: 0; cursor: pointer; padding: 2px;
+  font-family: var(--font-head); font-size: 0.78rem; font-weight: 600; color: var(--slate);
+}
+.adm-switch__knob {
+  position: relative; width: 34px; height: 20px; border-radius: 999px;
+  background: #c3cbd8; transition: background 0.18s ease;
+}
+.adm-switch__knob::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--white); transition: transform 0.18s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.adm-switch.is-on .adm-switch__knob { background: linear-gradient(120deg, var(--blue), var(--cyan)); }
+.adm-switch.is-on .adm-switch__knob::after { transform: translateX(14px); }
+.adm-switch.is-on { color: var(--blue); }
+.adm-switch:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 2px; border-radius: 6px; }
+.adm-block__tools { align-items: center; }

@@ -1,6 +1,6 @@
 import { supabase } from './supabase.js'
 
-const CARD_FIELDS = 'id, slug, title, category, excerpt, cover_url, published_at'
+const CARD_FIELDS = 'id, slug, title, category, excerpt, cover_url, published_at, hidden_fields'
 
 export function formatDate(iso) {
   return new Date(iso).toLocaleDateString('es-AR', {

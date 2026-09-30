@@ -22,8 +22,26 @@ const empty = () => ({
   cover_url: '',
   published: false,
   published_at: toLocalInput(),
+  hidden_fields: [],
   blocks: [],
 })
+
+// Interruptor "Mostrar / Oculto" que va al lado de cada campo opcional.
+function Switch({ on, onChange, label }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      className={`adm-switch ${on ? 'is-on' : ''}`}
+      onClick={() => onChange(!on)}
+    >
+      <span className="adm-switch__knob" />
+      <span className="adm-switch__text">{on ? 'Se muestra' : 'Oculto'}</span>
+    </button>
+  )
+}
 
 const blank = { text: { type: 'text', text: '' }, image: { type: 'image', url: '', caption: '' }, video: { type: 'video', url: '' } }
 
@@ -56,6 +74,7 @@ export default function PostEditor() {
           cover_url: p.cover_url || '',
           published: p.published,
           published_at: toLocalInput(p.published_at),
+          hidden_fields: p.hidden_fields || [],
           blocks: (p.blocks || []).map((b) => ({ ...b, _key: newKey() })),
         })
       )
@@ -68,6 +87,13 @@ export default function PostEditor() {
     setSaved(false)
     setForm((f) => ({ ...f, ...patch }))
   }
+  const isShown = (field) => !form.hidden_fields.includes(field)
+  const setShown = (field, shown) =>
+    set({
+      hidden_fields: shown
+        ? form.hidden_fields.filter((f) => f !== field)
+        : [...form.hidden_fields, field],
+    })
   const setBlock = (key, patch) =>
     set({ blocks: form.blocks.map((b) => (b._key === key ? { ...b, ...patch } : b)) })
   const addBlock = (type) => set({ blocks: [...form.blocks, { ...blank[type], _key: newKey() }] })
@@ -91,6 +117,7 @@ export default function PostEditor() {
       cover_url: form.cover_url || null,
       published: form.published,
       published_at: new Date(form.published_at).toISOString(),
+      hidden_fields: form.hidden_fields,
       blocks: form.blocks.map(({ _key, ...b }) => b),
     }
     // En noticias nuevas el slug se genera desde el título si queda vacío.
@@ -126,38 +153,55 @@ export default function PostEditor() {
           <input value={form.title} onChange={(e) => set({ title: e.target.value })} maxLength={200} required />
         </label>
 
-        <label className="adm-field">
-          <span>Categoría</span>
+        <div className={`adm-field ${isShown('category') ? '' : 'is-off'}`}>
+          <div className="adm-field__head">
+            <label htmlFor="f-category">Categoría</label>
+            <Switch label="Mostrar categoría" on={isShown('category')} onChange={(v) => setShown('category', v)} />
+          </div>
           <input
+            id="f-category"
             list="adm-categories"
             value={form.category}
             onChange={(e) => set({ category: e.target.value })}
             maxLength={40}
+            disabled={!isShown('category')}
           />
           <datalist id="adm-categories">
             {CATEGORIES.map((c) => <option key={c} value={c} />)}
           </datalist>
-        </label>
+        </div>
 
-        <label className="adm-field">
-          <span>Fecha de publicación</span>
+        <div className={`adm-field ${isShown('date') ? '' : 'is-off'}`}>
+          <div className="adm-field__head">
+            <label htmlFor="f-date">Fecha de publicación</label>
+            <Switch label="Mostrar fecha" on={isShown('date')} onChange={(v) => setShown('date', v)} />
+          </div>
           <input
+            id="f-date"
             type="datetime-local"
             value={form.published_at}
             onChange={(e) => set({ published_at: e.target.value })}
             required
           />
-        </label>
+          {!isShown('date') && (
+            <p className="adm-hint">La fecha no se muestra, pero sigue ordenando las noticias.</p>
+          )}
+        </div>
 
-        <label className="adm-field adm-span">
-          <span>Extracto (se muestra en las tarjetas)</span>
+        <div className={`adm-field adm-span ${isShown('excerpt') ? '' : 'is-off'}`}>
+          <div className="adm-field__head">
+            <label htmlFor="f-excerpt">Extracto (se muestra en las tarjetas y bajo la portada)</label>
+            <Switch label="Mostrar extracto" on={isShown('excerpt')} onChange={(v) => setShown('excerpt', v)} />
+          </div>
           <textarea
+            id="f-excerpt"
             rows="2"
             value={form.excerpt}
             onChange={(e) => set({ excerpt: e.target.value })}
             maxLength={500}
+            disabled={!isShown('excerpt')}
           />
-        </label>
+        </div>
 
         <label className="adm-field adm-span">
           <span>Slug (URL){isNew ? ' — opcional, se genera del título' : ''}</span>
@@ -168,9 +212,12 @@ export default function PostEditor() {
           />
         </label>
 
-        <div className="adm-field adm-span">
-          <span>Imagen de portada</span>
-          <ImageField label="portada" url={form.cover_url} onChange={(cover_url) => set({ cover_url })} />
+        <div className={`adm-field adm-span ${isShown('cover') ? '' : 'is-off'}`}>
+          <div className="adm-field__head">
+            <span>Imagen de portada</span>
+            <Switch label="Mostrar portada" on={isShown('cover')} onChange={(v) => setShown('cover', v)} />
+          </div>
+          <ImageField label="portada" url={form.cover_url} onChange={(cover_url) => set({ cover_url })} disabled={!isShown('cover')} />
         </div>
       </div>
 
@@ -180,10 +227,11 @@ export default function PostEditor() {
       )}
 
       {form.blocks.map((b, i) => (
-        <div className="adm-card adm-block" key={b._key}>
+        <div className={`adm-card adm-block ${b.hidden ? 'is-off' : ''}`} key={b._key}>
           <div className="adm-block__head">
             <strong>{{ text: 'Texto', image: 'Imagen', video: 'Video' }[b.type]}</strong>
             <div className="adm-block__tools">
+              <Switch label="Mostrar bloque" on={!b.hidden} onChange={(v) => setBlock(b._key, { hidden: !v })} />
               <button type="button" className="adm-icon" onClick={() => moveBlock(i, -1)} disabled={i === 0} aria-label="Subir">↑</button>
               <button type="button" className="adm-icon" onClick={() => moveBlock(i, 1)} disabled={i === form.blocks.length - 1} aria-label="Bajar">↓</button>
               <button type="button" className="adm-icon adm-icon--danger" onClick={() => removeBlock(b._key)} aria-label="Quitar bloque">✕</button>

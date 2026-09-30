@@ -9,6 +9,7 @@ Guía completa para cargar, editar y borrar noticias en el sitio de World Connec
 3. [El listado de noticias](#3-el-listado-de-noticias)
 4. [Crear una noticia paso a paso](#4-crear-una-noticia-paso-a-paso)
 5. [Los campos de la noticia](#5-los-campos-de-la-noticia)
+   - [Ocultar partes de una noticia](#ocultar-partes-de-una-noticia)
 6. [El contenido: bloques de texto, imagen y video](#6-el-contenido-bloques-de-texto-imagen-y-video)
 7. [Guía de imágenes](#7-guía-de-imágenes)
 8. [Guía de videos](#8-guía-de-videos)
@@ -138,6 +139,34 @@ Para volver al listado, tocá **← Volver**. Ojo: si volvés sin guardar, se pi
 ### Imagen de portada
 - Ver [sección 7](#7-guía-de-imágenes).
 
+### Ocultar partes de una noticia
+
+No todas las noticias necesitan todo. Al lado de **Categoría**, **Fecha de publicación**, **Extracto** e **Imagen de portada** hay un **interruptor**:
+
+- **Se muestra** (azul): la parte aparece en la web.
+- **Oculto** (gris): esa parte **no se muestra en esa noticia**, y el campo queda atenuado y bloqueado.
+
+Cómo funciona:
+
+- **Afecta solo a esa noticia.** Las demás no cambian.
+- **Se aplica en todos lados:** en la tarjeta del carrusel, en el listado `/noticias` y en la página de la noticia.
+- **El diseño se reacomoda solo, sin huecos.** Por ejemplo, sin portada la tarjeta y la página arrancan directo con el título; sin extracto la tarjeta se acorta; sin categoría o sin fecha desaparece esa línea.
+- **No se pierde lo cargado.** Si lo volvés a encender y guardás, todo reaparece tal como estaba. Ideal si dudás.
+- **Recordá guardar:** el cambio se aplica al tocar **Guardar**.
+- Si ocultás la **fecha**, no se muestra pero **sigue ordenando** las noticias (la más reciente va primero).
+- El **título** y el **slug** no se pueden ocultar.
+
+Ejemplos de uso:
+
+| Situación | Qué apagar |
+|---|---|
+| Noticia sin foto disponible | Imagen de portada |
+| Aviso corto que no necesita resumen | Extracto |
+| Comunicado atemporal (sin fecha relevante) | Fecha de publicación |
+| No querés clasificarla | Categoría |
+
+> **Nota sobre tarjetas:** en el listado y en el carrusel las tarjetas de una misma fila tienen la misma altura. Una noticia con muy pocas partes visibles se verá con más espacio en blanco que sus vecinas; es lo esperado.
+
 ---
 
 ## 6. El contenido: bloques de texto, imagen y video
@@ -146,10 +175,11 @@ El cuerpo de la noticia se arma con **bloques**. Se muestran en el mismo orden e
 
 Abajo de los bloques están los botones **+ Texto**, **+ Imagen** y **+ Video**, que agregan un bloque nuevo al final.
 
-Cada bloque tiene tres botones arriba a la derecha:
+Cada bloque tiene, arriba a la derecha:
 
+- **Interruptor Se muestra / Oculto:** oculta el bloque en la web **sin borrarlo**. El bloque queda atenuado y con borde punteado en el panel. Sirve para guardar un texto, foto o video "en pausa" y volver a mostrarlo cuando quieras.
 - **↑ / ↓:** subir o bajar el bloque de posición.
-- **✕:** quitar el bloque.
+- **✕:** quitar el bloque definitivamente.
 
 ### Bloque de texto
 - Escribí el texto tal cual.
@@ -447,6 +477,7 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 - **No hay vista previa** de borradores.
 - **No hay papelera ni deshacer.** Borrar es definitivo.
 - **No hay programación de publicaciones** (fecha y hora futura automática).
+- **Solo se pueden ocultar** categoría, fecha, extracto, portada y bloques. El título no.
 - **El texto es plano:** sin negritas, títulos internos ni links clickeables.
 - **No se suben archivos de video**, solo links de YouTube, Vimeo o Instagram (otras plataformas se muestran como botón).
 - **No hay comentarios de los visitantes** en las noticias.
@@ -501,6 +532,8 @@ Para exponerlo en la red local: `npm run dev -- --host`.
 
 | Quiero… | Hago… |
 |---|---|
+| No mostrar la portada, el extracto, la fecha o la categoría | Apagar el interruptor al lado del campo y **Guardar** |
+| Dejar un bloque en pausa sin borrarlo | Apagar el interruptor del bloque y **Guardar** |
 | Entrar | `/paginas-admin` con usuario y contraseña |
 | Crear una noticia | **+ Nueva noticia**, completar, marcar **Publicada**, **Guardar** |
 | Agregar texto, foto o video | **+ Texto**, **+ Imagen**, **+ Video** al final del editor |

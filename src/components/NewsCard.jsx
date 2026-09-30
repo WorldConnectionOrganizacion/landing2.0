@@ -2,7 +2,15 @@ import { Link } from 'react-router-dom'
 import { formatDate } from '../lib/posts.js'
 
 // `decorative`: copia duplicada del carrusel infinito; fuera del árbol de accesibilidad y del tab.
+// Las partes ocultas desde el panel (`hidden_fields`) no se dibujan y la tarjeta se reacomoda.
 export default function NewsCard({ post, decorative = false, ...rest }) {
+  const hidden = post.hidden_fields || []
+  const show = {
+    category: !hidden.includes('category') && post.category,
+    cover: !hidden.includes('cover') && post.cover_url,
+    date: !hidden.includes('date'),
+    excerpt: !hidden.includes('excerpt') && post.excerpt,
+  }
   return (
     <Link
       to={`/noticias/${post.slug}`}
@@ -11,15 +19,15 @@ export default function NewsCard({ post, decorative = false, ...rest }) {
       tabIndex={decorative ? -1 : undefined}
       {...rest}
     >
-      <span className="news-card__tag">{post.category}</span>
-      {post.cover_url && (
-        <img src={post.cover_url} alt="" className="news-card__img" loading="lazy" />
+      {show.category && <span className="news-card__tag">{post.category}</span>}
+      {show.cover && <img src={post.cover_url} alt="" className="news-card__img" loading="lazy" />}
+      {show.date && (
+        <time className="news-card__date" dateTime={post.published_at}>
+          {formatDate(post.published_at)}
+        </time>
       )}
-      <time className="news-card__date" dateTime={post.published_at}>
-        {formatDate(post.published_at)}
-      </time>
       <h3 className="news-card__title">{post.title}</h3>
-      {post.excerpt && <p className="news-card__text">{post.excerpt}</p>}
+      {show.excerpt && <p className="news-card__text">{post.excerpt}</p>}
       <span className="news-card__more">Más información →</span>
     </Link>
   )
