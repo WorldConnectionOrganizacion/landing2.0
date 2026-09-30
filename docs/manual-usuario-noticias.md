@@ -413,13 +413,13 @@ No es necesario hacerlo seguido; con una vez al mes alcanza.
 - Se **detiene** cuando el visitante pasa el mouse por encima o lo toca.
 - Las **flechas** ‹ › permiten avanzar o retroceder una tarjeta.
 - El botón **Entérate de todo** lleva a la página `/noticias`.
-- **Si no hay ninguna noticia publicada, la sección completa se oculta** de la página de inicio.
+- **Si no hay ninguna noticia publicada, la sección completa se oculta** de la página de inicio, y también el link **Noticias** del menú superior y del pie de página. Reaparecen solos cuando publiques la primera.
 - Si el visitante tiene activada la opción de "reducir movimiento" en su dispositivo, el carrusel no se mueve solo, pero sí con las flechas.
 
 ### Página `/noticias`
 - Muestra todas las noticias publicadas, **9 por página**, con paginación (Anterior, Siguiente y números).
 - El número de página va en la dirección (`/noticias?pagina=2`), así se puede compartir.
-- También hay un link **Noticias** en el menú principal y en el pie de página.
+- También hay un link **Noticias** en el menú principal y en el pie de página (solo se muestra si hay al menos una noticia publicada). Si alguien entra a `/noticias` directamente sin noticias, ve el mensaje "Todavía no hay noticias publicadas".
 
 ### Página de cada noticia
 De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, título, fecha, portada, extracto y los bloques en orden. Las partes y los bloques ocultos no se muestran y el resto se acomoda sin dejar huecos.
@@ -477,7 +477,7 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 | La noticia está publicada pero no sale en el carrusel | No está entre las 6 más recientes por fecha | Se ve igual en `/noticias`. Revisá la fecha de publicación |
 | Una imagen borrada se sigue viendo | Memoria temporal (caché) | Esperá unos minutos |
 | La portada se ve cortada | Proporción distinta de 16:9 | Subí una versión horizontal 16:9 con lo importante en el centro |
-| Toda la sección Noticias desapareció de inicio | No hay noticias publicadas | Publicá al menos una |
+| Desapareció la sección Noticias de inicio y el link "Noticias" del menú | No hay noticias publicadas | Publicá al menos una: vuelven a aparecer solas |
 
 ---
 

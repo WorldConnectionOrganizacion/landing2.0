@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { navLinks } from '../data/navLinks.js'
+import useNavLinks from '../hooks/useNavLinks.js'
 
 export default function Footer() {
+  const navLinks = useNavLinks()
   return (
     <footer className="footer">
       <div className="container footer__grid">

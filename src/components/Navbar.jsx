@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { navLinks, contactLink } from '../data/navLinks.js'
+import { contactLink } from '../data/navLinks.js'
+import useNavLinks from '../hooks/useNavLinks.js'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const navLinks = useNavLinks()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
