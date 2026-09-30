@@ -33,7 +33,7 @@ El sitio tiene una sección **Noticias** con tres partes:
 - **Página `/noticias`:** listado completo, de 9 noticias por página.
 - **Página de cada noticia:** una plantilla fija con etiqueta, título, fecha, portada, extracto y el contenido que cargues.
 
-El diseño es siempre el mismo. Vos solo cargás el contenido, igual que en WordPress: no hace falta tocar código ni diseñar nada.
+El diseño es siempre el mismo. Vos solo cargás el contenido, igual que en WordPress: no hace falta tocar código ni diseñar nada. Si una noticia no necesita alguna parte (por ejemplo la portada), la podés **ocultar solo en esa noticia** y el diseño se acomoda solo (ver [Ocultar partes de una noticia](#ocultar-partes-de-una-noticia)).
 
 Cada noticia se compone de:
 
@@ -43,6 +43,8 @@ Cada noticia se compone de:
 | Extracto | Tarjetas y debajo de la portada en la noticia |
 | Imagen de portada | Tarjetas y encabezado de la noticia |
 | Bloques (texto, imagen, video) | Cuerpo de la noticia, en el orden que elijas |
+
+Todas las partes, salvo el título, se pueden ocultar noticia por noticia.
 
 ---
 
@@ -94,9 +96,10 @@ Botones de arriba:
 4. Revisá la **fecha de publicación** (por defecto es ahora).
 5. Escribí un **extracto** corto.
 6. Subí la **imagen de portada**.
-7. En **Contenido**, agregá los bloques que necesites con **+ Texto**, **+ Imagen** y **+ Video**, y ordenalos.
-8. Marcá **Publicada** si querés que se vea en la web ya mismo. Si no, queda como borrador.
-9. Tocá **Guardar**.
+7. Si alguna parte no hace falta en esta noticia (categoría, fecha, extracto o portada), apagá el interruptor que está al lado de ese campo (ver [Ocultar partes de una noticia](#ocultar-partes-de-una-noticia)).
+8. En **Contenido**, agregá los bloques que necesites con **+ Texto**, **+ Imagen** y **+ Video**, y ordenalos.
+9. Marcá **Publicada** si querés que se vea en la web ya mismo. Si no, queda como borrador.
+10. Tocá **Guardar**.
 
 Al guardar por primera vez, el sistema te lleva a la pantalla de edición de esa noticia y a partir de ahí cada **Guardar** actualiza la misma noticia. Verás el aviso **Guardado ✓**.
 
@@ -127,7 +130,7 @@ Para volver al listado, tocá **← Volver**. Ojo: si volvés sin guardar, se pi
 - Resumen breve, hasta 500 caracteres. Recomendado: **entre 100 y 160**.
 - En las tarjetas se muestran solo **3 líneas**; lo que exceda se corta con "…".
 - En la página de la noticia aparece debajo de la portada, destacado, como introducción.
-- Es opcional, pero conviene completarlo: sin extracto la tarjeta queda sin descripción.
+- Es opcional, pero conviene completarlo: sin extracto la tarjeta queda sin descripción. Si no lo querés en una noticia, apagá su interruptor.
 
 ### Slug (URL)
 - Es la parte final de la dirección de la noticia: `/noticias/**mi-noticia**`.
@@ -155,6 +158,7 @@ Cómo funciona:
 - **Recordá guardar:** el cambio se aplica al tocar **Guardar**.
 - Si ocultás la **fecha**, no se muestra pero **sigue ordenando** las noticias (la más reciente va primero).
 - El **título** y el **slug** no se pueden ocultar.
+- Una portada o imagen oculta **sigue almacenada** y cuenta como "en uso": la limpieza de imágenes no la borra.
 
 Ejemplos de uso:
 
@@ -197,10 +201,11 @@ Cada bloque tiene, arriba a la derecha:
 ### Bloque de imagen
 - Tocá **Subir imagen** y elegí un archivo (ver [sección 7](#7-guía-de-imágenes)).
 - Podés agregar un **pie de imagen** (hasta 300 caracteres): aparece centrado debajo de la foto, en letra chica. Es opcional pero recomendable para describir quién o qué se ve.
-- **Cambiar imagen** reemplaza la foto. **Quitar** la deja vacía (un bloque de imagen sin foto no se muestra en la web; conviene borrar el bloque con ✕).
+- **Cambiar imagen** reemplaza la foto. **Quitar** la deja vacía, y **no se puede guardar una noticia con un bloque de imagen vacío** (verás "Imagen con URL inválida"): subí una foto o borrá el bloque con ✕.
 
 ### Bloque de video
 - Pegá el **link** del video (ver [sección 8](#8-guía-de-videos)). No se suben archivos de video al panel.
+- **No se puede guardar con un bloque de video vacío** (verás "Video con URL inválida"): pegá un link o borrá el bloque con ✕.
 - Si el link es reconocido, el video se ve incrustado en la noticia.
 - Si el link no se reconoce (por ejemplo TikTok o Facebook), verás el aviso **"Link no reconocido: se mostrará como botón 'Ver video'"**. El visitante verá un botón que abre el link en otra pestaña.
 
@@ -296,7 +301,7 @@ Se pueden usar links de **Reels** y de **publicaciones** de Instagram. Funcionan
 
 1. En Instagram, abrí el reel o la publicación, tocá los tres puntos (**…**) o **Compartir**, y elegí **Copiar link**.
 2. En la noticia, tocá **+ Video** y pegá el link. Los parámetros extra que agrega Instagram (`?igsh=...`) no molestan.
-3. En la web se muestra la **tarjeta de Instagram** dentro de la noticia, centrada y en formato vertical (hasta 540 px de ancho), con el video y su descripción.
+3. En la web se muestra la **tarjeta de Instagram** dentro de la noticia, centrada y en formato vertical (hasta 540 px de ancho y 700 px de alto), con el video y su descripción.
 
 Tené en cuenta:
 
@@ -346,7 +351,8 @@ El video aparece **donde pongas el bloque**: podés colocarlo al final, o entre 
 - La casilla **Publicada (visible en la web)** está en la barra de guardado, abajo de todo.
 - **Marcada:** la noticia se ve en el carrusel, en el listado y con su link directo.
 - **Sin marcar (borrador):** nadie del público puede verla, ni siquiera con el link. Solo se ve en el panel.
-- Para **ocultar** una noticia sin borrarla, desmarcá la casilla y guardá. Podés volver a publicarla cuando quieras.
+- Para **ocultar una noticia completa** sin borrarla, desmarcá la casilla y guardá. Podés volver a publicarla cuando quieras.
+- No confundir con los interruptores de cada campo: esos ocultan **una parte** de la noticia (por ejemplo la portada), no la noticia entera.
 
 ### Fecha de publicación
 - Define el **orden**: la más reciente va primero, en el carrusel y en el listado.
@@ -391,7 +397,7 @@ Para eliminarlas, en el listado tocá **Limpiar imágenes sin usar**:
 
 Reglas de seguridad:
 
-- Solo borra imágenes **que ninguna noticia usa** (publicada o borrador).
+- Solo borra imágenes **que ninguna noticia usa**. Cuentan como usadas las de noticias publicadas y borradores, y también las de portadas o bloques ocultos con el interruptor.
 - Solo borra las que tienen **más de 24 horas**. Así no elimina una foto que otra persona acaba de subir en un editor abierto.
 
 No es necesario hacerlo seguido; con una vez al mes alcanza.
@@ -402,7 +408,7 @@ No es necesario hacerlo seguido; con una vez al mes alcanza.
 
 ### Carrusel de la página de inicio
 - Aparece bajo el título "Mantenete al día con World Connection", cerca del final de la página.
-- Muestra las **6 noticias más recientes**, con etiqueta, imagen, fecha, título, extracto y "Más información →".
+- Muestra las **6 noticias más recientes**, con etiqueta, imagen, fecha, título, extracto y "Más información →" (salvo las partes que hayas ocultado en cada noticia).
 - **Se mueve solo, lento y de forma continua**, en bucle infinito.
 - Se **detiene** cuando el visitante pasa el mouse por encima o lo toca.
 - Las **flechas** ‹ › permiten avanzar o retroceder una tarjeta.
@@ -416,7 +422,7 @@ No es necesario hacerlo seguido; con una vez al mes alcanza.
 - También hay un link **Noticias** en el menú principal y en el pie de página.
 
 ### Página de cada noticia
-De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, título, fecha, portada, extracto y los bloques en orden.
+De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, título, fecha, portada, extracto y los bloques en orden. Las partes y los bloques ocultos no se muestran y el resto se acomoda sin dejar huecos.
 
 ---
 
@@ -459,6 +465,11 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 | "No se pudo subir la imagen" | Falla de conexión o problema del servicio | Reintentá; si persiste, avisá a quien administra el sistema |
 | "Ya existe una noticia con ese slug" | Otro contenido tiene la misma dirección | Cambiá el slug o el título |
 | "El título es obligatorio" | Título vacío | Completalo |
+| "Imagen con URL inválida" al guardar | Hay un bloque de imagen sin foto | Subí la foto o borrá el bloque con ✕ |
+| "Video con URL inválida" al guardar | Hay un bloque de video sin link, o el link no empieza con `https://` | Pegá un link válido o borrá el bloque |
+| Apagué un campo y en la web se sigue viendo | No se guardó | Tocá **Guardar** y recargá la página con `Ctrl + F5` |
+| Un campo aparece gris y no puedo escribir | Su interruptor está en "Oculto" | Encendelo ("Se muestra") para editarlo |
+| Una tarjeta se ve con mucho espacio en blanco | Tiene casi todo oculto; las tarjetas de una fila igualan su altura | Es lo esperado; mostrá más partes o aceptalo |
 | "Link no reconocido" en un video | El link no es de YouTube, Vimeo ni Instagram, o es el de un perfil | Usá el link de un video o reel concreto, o aceptá que se muestre como botón |
 | El reel de Instagram pide iniciar sesión o da error | La cuenta es privada o la publicación se borró | Verificá que la cuenta sea pública, o subí el video a YouTube |
 | El video incrustado muestra error | El video es privado o no permite incrustarse | Cambiá su visibilidad a Público o No listado y revisá que permita incrustar |
@@ -500,6 +511,7 @@ Se definen como variables de entorno (en `.env.local` para desarrollo local y en
 | `VITE_SUPABASE_URL` | URL del proyecto de Supabase |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Clave pública de Supabase (`sb_publishable_...`) |
 | `SUPABASE_SECRET_KEY` | Clave secreta de Supabase (`sb_secret_...`). **Nunca** debe compartirse ni subirse al repositorio |
+| `VITE_WEB3FORMS_KEY` | (Opcional, no es de noticias) Clave del formulario de contacto |
 
 Reglas:
 
@@ -509,14 +521,17 @@ Reglas:
 - Tras cambiar variables en Vercel hay que hacer un nuevo deploy para que apliquen.
 
 ### Base de datos y almacenamiento (Supabase)
-- El archivo `supabase/schema.sql` crea la tabla `posts`, las reglas de seguridad y el bucket `news-media`. Se ejecuta una sola vez en **SQL Editor**, por bloques si el editor falla.
+- El archivo `supabase/schema.sql` crea la tabla `posts`, las reglas de seguridad, el bucket `news-media` y la columna `hidden_fields`. Se ejecuta una sola vez en **SQL Editor**, por bloques si el editor falla.
 - Además hay que aplicar los límites del bucket (5 MB y solo imágenes), incluidos al final de ese archivo.
+- **Base ya creada antes de los interruptores de visibilidad:** hay que correr una vez `supabase/migrations-hidden-fields.sql` (agrega la columna `hidden_fields`). Sin ella, el sitio no puede leer las noticias y muestra error.
 - La lectura pública solo ve noticias con `published = true`. Toda escritura pasa por el servidor con la clave secreta, previa autenticación.
 
 ### Seguridad
 - Cookie de sesión firmada, `HttpOnly`, `SameSite=Strict`, y `Secure` en producción. Dura 8 horas.
 - Límite de 5 intentos fallidos por conexión cada 15 minutos. En Vercel cada instancia lleva su propio contador, por eso conviene una contraseña larga.
-- El panel lleva `noindex`, así que los buscadores no lo indexan.
+- El panel lleva `noindex` (etiqueta y cabecera `X-Robots-Tag`), así que los buscadores no lo indexan.
+- Todas las operaciones de escritura (`/api/posts`, `/api/upload`, `/api/cleanup`) exigen la sesión de administrador y validan el contenido en el servidor.
+- Las funciones del panel están en la carpeta `api/`, y `vercel.json` redirige el resto de las rutas a la aplicación.
 
 ### Ejecutar en local
 ```bash
@@ -532,13 +547,13 @@ Para exponerlo en la red local: `npm run dev -- --host`.
 
 | Quiero… | Hago… |
 |---|---|
-| No mostrar la portada, el extracto, la fecha o la categoría | Apagar el interruptor al lado del campo y **Guardar** |
-| Dejar un bloque en pausa sin borrarlo | Apagar el interruptor del bloque y **Guardar** |
 | Entrar | `/paginas-admin` con usuario y contraseña |
 | Crear una noticia | **+ Nueva noticia**, completar, marcar **Publicada**, **Guardar** |
 | Agregar texto, foto o video | **+ Texto**, **+ Imagen**, **+ Video** al final del editor |
 | Reordenar contenido | Botones **↑ ↓** de cada bloque |
-| Ocultar sin borrar | Desmarcar **Publicada** y **Guardar** |
+| Ocultar una noticia entera sin borrarla | Desmarcar **Publicada** y **Guardar** |
+| No mostrar la portada, el extracto, la fecha o la categoría | Apagar el interruptor al lado del campo y **Guardar** |
+| Dejar un bloque en pausa sin borrarlo | Apagar el interruptor del bloque y **Guardar** |
 | Corregir una noticia | **Editar**, cambiar, **Guardar** |
 | Eliminar una noticia | **Borrar** y confirmar (definitivo) |
 | Liberar imágenes sin uso | **Limpiar imágenes sin usar** |
@@ -548,5 +563,6 @@ Para exponerlo en la red local: `npm run dev -- --host`.
 
 - Imágenes: **JPG, PNG, WebP o GIF, hasta 5 MB**. Portada **1600 × 900 px** horizontal. Ideal menos de **500 KB**.
 - Videos: **link de YouTube, Vimeo o Instagram (reel o publicación pública)**, video público o no listado, **MP4 H.264 1080p 16:9**.
+- Se pueden ocultar por noticia: **categoría, fecha, extracto, portada y cada bloque**. El título no.
 - Carrusel de inicio: **6 noticias más recientes**. Listado: **9 por página**.
 - Sesión: **8 horas**. Bloqueo por intentos fallidos: **15 minutos**.
