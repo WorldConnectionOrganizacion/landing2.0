@@ -44,3 +44,9 @@ create policy "public read published"
 insert into storage.buckets (id, name, public)
 values ('news-media', 'news-media', true)
 on conflict (id) do nothing;
+
+-- Límites del bucket: máx. 5 MB y solo imágenes (la subida es directa desde el navegador).
+update storage.buckets
+set file_size_limit = 5242880,
+    allowed_mime_types = array['image/jpeg','image/png','image/webp','image/gif']
+where id = 'news-media';
