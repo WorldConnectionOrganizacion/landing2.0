@@ -10,7 +10,7 @@ export function formatDate(iso) {
   })
 }
 
-export async function fetchLatestPosts(limit = 8) {
+export async function fetchLatestPosts(limit = 6) {
   if (!supabase) return []
   const { data, error } = await supabase
     .from('posts')
@@ -22,15 +22,22 @@ export async function fetchLatestPosts(limit = 8) {
   return data ?? []
 }
 
-export async function fetchAllPosts() {
-  if (!supabase) return []
-  const { data, error } = await supabase
+// Página `page` (desde 1) de noticias publicadas, más recientes primero.
+export async function fetchPostsPage(page, pageSize) {
+  if (!supabase) return { posts: [], total: 0 }
+  const from = (page - 1) * pageSize
+  const { data, error, count } = await supabase
     .from('posts')
-    .select(CARD_FIELDS)
+    .select(CARD_FIELDS, { count: 'exact' })
     .eq('published', true)
     .order('published_at', { ascending: false })
-  if (error) throw error
-  return data ?? []
+    .range(from, from + pageSize - 1)
+  if (error) {
+    // Página fuera de rango (PGRST103): se trata como vacía; el llamador redirige.
+    if (error.code === 'PGRST103') return { posts: [], total: 0, outOfRange: true }
+    throw error
+  }
+  return { posts: data ?? [], total: count ?? 0 }
 }
 
 // Devuelve null si no existe o no está publicada (RLS lo filtra).
