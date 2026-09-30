@@ -1150,7 +1150,7 @@
 @media (max-width: 640px) { .newslist__grid { grid-template-columns: 1fr; } }
 
 .post__narrow { max-width: 780px; }
-.post__back { display: inline-block; margin-bottom: 24px; }
+.post__back { display: flex; width: fit-content; margin-bottom: 20px; }
 .post__title {
   font-size: clamp(1.9rem, 4vw, 2.8rem);
   letter-spacing: -0.02em;
@@ -1159,6 +1159,8 @@
 .post__date { display: block; color: var(--slate); font-size: 0.9rem; margin-bottom: 28px; }
 .post__cover {
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   margin-bottom: 32px;
@@ -1166,7 +1168,13 @@
 .post__lead { max-width: none; font-weight: 500; margin-bottom: 28px; }
 .post__text p { color: var(--ink); font-size: 1.05rem; margin-bottom: 18px; white-space: pre-line; }
 .post__figure { margin: 28px 0; }
-.post__figure img { width: 100%; border-radius: var(--radius-sm); }
+.post__figure img {
+  display: block;
+  max-width: 100%;
+  max-height: 560px;
+  margin: 0 auto;
+  border-radius: var(--radius-sm);
+}
 .post__figure figcaption { color: var(--slate); font-size: 0.85rem; margin-top: 8px; text-align: center; }
 .post__video {
   position: relative;
@@ -1215,3 +1223,4 @@
   .pager__btn { padding: 10px 14px; }
   .pager__num { width: 36px; height: 36px; }
 }
+.post__narrow > .news-card__tag { display: block; width: fit-content; }
