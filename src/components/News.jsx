@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom'
 import { fetchLatestPosts } from '../lib/posts.js'
 import NewsCard from './NewsCard.jsx'
 
-const AUTOPLAY_MS = 4500
+const SPEED = 40 // px por segundo: desplazamiento lento y continuo
+const ARROW_PAUSE_MS = 900 // tiempo que dura el desplazamiento suave de una flecha
 
 export default function News() {
   const [posts, setPosts] = useState([])
-  const [hovering, setHovering] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [manual, setManual] = useState(0) // se incrementa al usar las flechas: reinicia el temporizador
+  const [loop, setLoop] = useState(false) // true: hay más tarjetas que ancho → se duplica para el bucle
   const trackRef = useRef(null)
   const sectionRef = useRef(null)
+  const state = useRef({ hover: false, visible: false, until: 0 })
 
   useEffect(() => {
     let active = true
@@ -21,45 +21,91 @@ export default function News() {
     return () => { active = false }
   }, [])
 
-  // Solo avanza mientras la sección está en pantalla.
+  // Decide si hace falta el bucle (las tarjetas no entran en el ancho visible).
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const measure = () => {
+      const cards = el.children
+      if (!cards.length) return
+      const dup = el.querySelector('[data-dup]')
+      if (dup) {
+        const setWidth = dup.offsetLeft - cards[0].offsetLeft
+        setLoop(setWidth > el.clientWidth + 8)
+      } else {
+        setLoop(el.scrollWidth > el.clientWidth + 8)
+      }
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [posts.length, loop])
+
+  // Solo se mueve mientras la sección está en pantalla.
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-    const obs = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), {
+    const obs = new IntersectionObserver(([e]) => { state.current.visible = e.isIntersecting }, {
       threshold: 0.2,
     })
     obs.observe(el)
     return () => obs.disconnect()
   }, [posts.length])
 
-  // Avanza una tarjeta; al llegar al final (o al inicio, hacia atrás) da la vuelta.
-  const step = useCallback((dir) => {
+  // Ancho de un juego completo de tarjetas (con su gap): el largo del bucle.
+  const setWidth = () => {
+    const el = trackRef.current
+    const dup = el?.querySelector('[data-dup]')
+    return dup ? dup.offsetLeft - el.firstElementChild.offsetLeft : 0
+  }
+
+  // Desplazamiento continuo con requestAnimationFrame.
+  useEffect(() => {
+    if (!loop) return
+    const el = trackRef.current
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf
+    let last = performance.now()
+    let pos = el.scrollLeft
+
+    const tick = (now) => {
+      const dt = Math.min(now - last, 100) / 1000
+      last = now
+      const s = state.current
+      const w = setWidth()
+      const busy = s.hover || !s.visible || document.hidden || now < s.until
+
+      if (busy) {
+        pos = el.scrollLeft // seguir la posición real (mouse, dedo o flechas)
+        // Con el usuario moviendo a mano, normalizamos sin que se note.
+        if (w && now >= s.until && pos >= w) {
+          el.scrollLeft = pos - w
+          pos -= w
+        }
+      } else if (w) {
+        pos += SPEED * dt
+        if (pos >= w) pos -= w
+        el.scrollLeft = pos
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [loop, posts.length])
+
+  const onArrow = useCallback((dir) => {
     const el = trackRef.current
     if (!el) return
     const card = el.firstElementChild
-    if (!card) return
     const gap = parseFloat(getComputedStyle(el).columnGap) || 0
     const amount = card.getBoundingClientRect().width + gap
-    const max = el.scrollWidth - el.clientWidth
-    if (max <= 4) return // todo entra en pantalla: nada que mover
-    if (dir > 0 && el.scrollLeft >= max - 4) el.scrollTo({ left: 0, behavior: 'smooth' })
-    else if (dir < 0 && el.scrollLeft <= 4) el.scrollTo({ left: max, behavior: 'smooth' })
-    else el.scrollBy({ left: dir * amount, behavior: 'smooth' })
-  }, [])
-
-  const onArrow = (dir) => {
-    step(dir)
-    setManual((n) => n + 1)
-  }
-
-  useEffect(() => {
-    if (posts.length < 2 || hovering || !visible) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = setInterval(() => {
-      if (!document.hidden) step(1)
-    }, AUTOPLAY_MS)
-    return () => clearInterval(id)
-  }, [posts.length, hovering, visible, manual, step])
+    const w = setWidth()
+    state.current.until = performance.now() + ARROW_PAUSE_MS
+    // Al inicio del bucle, saltamos a la copia idéntica para poder retroceder.
+    if (loop && w && dir < 0 && el.scrollLeft < amount) el.scrollLeft += w
+    el.scrollBy({ left: dir * amount, behavior: 'smooth' })
+  }, [loop])
 
   if (!posts.length) return null
 
@@ -73,12 +119,12 @@ export default function News() {
 
         <div
           className="news__carousel"
-          onMouseEnter={() => setHovering(true)}
-          onMouseLeave={() => setHovering(false)}
-          onFocus={() => setHovering(true)}
-          onBlur={() => setHovering(false)}
-          onTouchStart={() => setHovering(true)}
-          onTouchEnd={() => setTimeout(() => setHovering(false), 3000)}
+          onMouseEnter={() => (state.current.hover = true)}
+          onMouseLeave={() => (state.current.hover = false)}
+          onFocus={() => (state.current.hover = true)}
+          onBlur={() => (state.current.hover = false)}
+          onTouchStart={() => (state.current.hover = true)}
+          onTouchEnd={() => setTimeout(() => (state.current.hover = false), 2500)}
         >
           <button
             type="button"
@@ -93,6 +139,15 @@ export default function News() {
             {posts.map((p) => (
               <NewsCard key={p.id} post={p} />
             ))}
+            {loop &&
+              posts.map((p, i) => (
+                <NewsCard
+                  key={`dup-${p.id}`}
+                  post={p}
+                  decorative
+                  data-dup={i === 0 ? '' : undefined}
+                />
+              ))}
           </div>
 
           <button

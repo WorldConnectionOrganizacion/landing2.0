@@ -1038,14 +1038,12 @@
   display: flex;
   gap: 24px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   padding: 8px 4px 20px;
 }
 .news__track::-webkit-scrollbar { display: none; }
 .news-card {
   flex: 0 0 calc((100% - 48px) / 3);
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   background: var(--white);
