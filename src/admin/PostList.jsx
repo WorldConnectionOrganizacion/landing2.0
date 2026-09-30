@@ -89,14 +89,16 @@ export default function PostList() {
                       {p.published ? 'Publicada' : 'Borrador'}
                     </span>
                   </td>
-                  <td className="adm-actions">
-                    {p.published && (
-                      <a href={`/noticias/${p.slug}`} target="_blank" rel="noreferrer">Ver</a>
-                    )}
-                    <Link to={`editar/${p.id}`}>Editar</Link>
-                    <button type="button" className="adm-link-danger" onClick={() => remove(p)}>
-                      Borrar
-                    </button>
+                  <td>
+                    <div className="adm-actions">
+                      {p.published && (
+                        <a href={`/noticias/${p.slug}`} target="_blank" rel="noreferrer">Ver</a>
+                      )}
+                      <Link to={`editar/${p.id}`}>Editar</Link>
+                      <button type="button" className="adm-link-danger" onClick={() => remove(p)}>
+                        Borrar
+                      </button>
+                  </div>
                   </td>
                 </tr>
               ))}

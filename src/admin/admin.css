@@ -56,7 +56,7 @@
 .adm-table__title { font-weight: 600; min-width: 200px; }
 .adm-badge { font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--line); color: var(--slate); }
 .adm-badge.is-on { background: var(--cyan-soft); color: var(--blue); }
-.adm-actions { white-space: nowrap; display: flex; gap: 14px; }
+.adm-actions { white-space: nowrap; display: flex; align-items: center; gap: 14px; }
 .adm-actions a, .adm-actions button { color: var(--blue); font: inherit; font-weight: 600; background: none; border: 0; cursor: pointer; padding: 0; }
 .adm-actions .adm-link-danger { color: #c0392b; }
 
