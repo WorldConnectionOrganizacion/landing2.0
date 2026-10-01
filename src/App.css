@@ -1407,3 +1407,14 @@
     transition-delay: 0s !important;
   }
 }
+
+/* LinkedIn: tarjeta vertical, centrada (504 px es el ancho que usa LinkedIn al insertar) */
+.post__li { display: flex; justify-content: center; margin: 28px 0; }
+.post__li iframe {
+  width: 100%;
+  max-width: 504px;
+  height: 716px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
