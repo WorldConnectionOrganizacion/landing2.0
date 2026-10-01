@@ -3,3 +3,8 @@ dist
 .env
 *.local
 .DS_Store
+
+# Planillas con datos personales: nunca deben ir al repo ni a public/
+*.xlsx
+*.xls
+*.csv
