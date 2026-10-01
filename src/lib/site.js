@@ -2,7 +2,7 @@
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://world-connection.vercel.app').replace(/\/+$/, '')
 
 export const SITE_NAME = 'World Connection'
-export const DEFAULT_TITLE = 'World Connection Mendoza | Telecomunicaciones y Gestión Comercial'
+export const DEFAULT_TITLE = 'World Connection Mendoza | Call Center y Telecomunicaciones'
 export const DEFAULT_DESCRIPTION =
-  'Empresa de telecomunicaciones y gestión comercial multicanal en Mendoza, Argentina. Venta telefónica, leads digitales y equipos comerciales.'
+  'World Connection: call center y venta de telecomunicaciones en Mendoza, Argentina. Venta telefónica, leads digitales y equipos comerciales para marcas líderes.'
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`

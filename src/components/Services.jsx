@@ -1,8 +1,8 @@
 const services = [
   {
     icon: '📞',
-    title: 'Venta telefónica',
-    text: 'Campañas outbound y cierre de ventas inbound con guiones, métricas y seguimiento.',
+    title: 'Call center y venta telefónica',
+    text: 'Campañas outbound y cierre de ventas inbound desde nuestro call center, con guiones, métricas y seguimiento.',
   },
   {
     icon: '💬',

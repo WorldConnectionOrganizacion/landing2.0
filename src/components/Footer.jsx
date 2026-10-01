@@ -11,8 +11,8 @@ export default function Footer() {
             World<span>Connection</span>
           </span>
           <p className="footer__tagline">
-            Soluciones de telecomunicaciones y gestión comercial multicanal,
-            medibles y cercanas.
+            Call center y gestión comercial multicanal en Mendoza: soluciones de
+            telecomunicaciones medibles y cercanas.
           </p>
         </div>
 

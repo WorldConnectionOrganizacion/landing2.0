@@ -7,7 +7,7 @@ export default function About() {
             src="/images/about-equipo.webp"
             width="1000"
             height="1250"
-            alt="Equipo comercial de World Connection trabajando"
+            alt="Equipo comercial del call center de World Connection en Mendoza"
             className="about__img about__img--tall"
             loading="lazy"
           />
@@ -28,7 +28,8 @@ export default function About() {
           </h2>
           <p className="lead">
             En World Connection promovemos productos y servicios de telecomunicaciones
-            de clientes nacionales e internacionales. Combinamos equipos comerciales
+            de clientes nacionales e internacionales desde nuestro call center en
+            Mendoza. Combinamos equipos comerciales
             entrenados, procesos claros y tecnología para llegar a más personas y
             generar resultados que se pueden medir.
           </p>
