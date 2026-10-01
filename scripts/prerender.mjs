@@ -3,6 +3,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { applyHead } from '../api/_lib/head.js'
 
 const root = process.cwd()
 const dist = path.join(root, 'dist')
@@ -12,7 +13,6 @@ const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 const { render } = await import(pathToFileURL(ssrEntry).href)
 
 const site = (process.env.VITE_SITE_URL || 'https://world-connection.vercel.app').replace(/\/+$/, '')
-const escAttr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
 // "Shell" sin contenido: lo usan el resto de rutas (admin, detalle de noticia, desconocidas).
 fs.writeFileSync(path.join(dist, 'app-shell.html'), template)
@@ -33,15 +33,11 @@ for (const page of pages) {
   let html = template.replace('<div id="root"></div>', `<div id="root">${render(page.url)}</div>`)
 
   if (page.title) {
-    const canonical = `${site}${page.url}`
-    html = html
-      .replace(/<title>[\s\S]*?<\/title>/, `<title>${escAttr(page.title)}</title>`)
-      .replace(/(<meta\s+name="description"\s+content=")[^"]*(")/, `$1${escAttr(page.description)}$2`)
-      .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${canonical}$2`)
-      .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${canonical}$2`)
-      .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${escAttr(page.title)}$2`)
-      .replace(/(<meta\s+property="og:description"\s+content=")[^"]*(")/, `$1${escAttr(page.description)}$2`)
-      .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${escAttr(page.title)}$2`)
+    html = applyHead(html, {
+      title: page.title,
+      description: page.description,
+      canonical: `${site}${page.url}`,
+    })
   }
 
   const out = path.join(dist, page.file)
