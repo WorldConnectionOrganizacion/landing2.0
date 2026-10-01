@@ -9,15 +9,16 @@ export default function Hero() {
 
       <div className="container hero__inner">
         <div className="hero__copy">
-          <span className="eyebrow eyebrow--light">Gestión comercial multicanal</span>
+          <span className="eyebrow eyebrow--light">Call center y gestión comercial multicanal</span>
           <h1 className="hero__title">
-            Conectamos marcas y personas con soluciones de{' '}
-            <span className="text-gradient">telecomunicaciones</span> que generan
-            resultados.
+            Call center y venta de{' '}
+            <span className="text-gradient">telecomunicaciones</span> en Mendoza
+            que generan resultados.
           </h1>
           <p className="hero__sub">
-            Promovemos productos y servicios de clientes nacionales e internacionales
-            con equipos comerciales entrenados, tecnología y una gestión cercana y medible.
+            Conectamos marcas y personas. Promovemos productos y servicios de clientes
+            nacionales e internacionales con equipos comerciales entrenados, tecnología
+            y una gestión cercana y medible.
           </p>
           <div className="hero__actions">
             <a href="#contacto" className="btn btn--primary">Agendá una reunión</a>

@@ -8,7 +8,8 @@ export default function Careers() {
           <p className="lead">
             Creemos en el crecimiento de las personas. Buscamos talento con ganas de
             aprender, superarse y crecer dentro de una empresa en plena expansión.
-            Si te gustan los desafíos comerciales, este es tu lugar.
+            Si te gustan los desafíos comerciales, sumate a nuestro call center en
+            Mendoza: este es tu lugar.
           </p>
           <a
             href="https://wa.me/5492613993207?text=Hola%20World%20Connection,%20quiero%20enviar%20mi%20CV"
