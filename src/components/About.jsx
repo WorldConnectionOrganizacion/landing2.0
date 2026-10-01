@@ -4,13 +4,17 @@ export default function About() {
       <div className="container about__grid">
         <div className="about__media reveal">
           <img
-            src="/images/about-equipo.jpg"
+            src="/images/about-equipo.webp"
+            width="1000"
+            height="1250"
             alt="Equipo comercial de World Connection trabajando"
             className="about__img about__img--tall"
             loading="lazy"
           />
           <img
-            src="/images/about-capacitacion.jpg"
+            src="/images/about-capacitacion.webp"
+            width="1000"
+            height="750"
             alt="Capacitación del equipo comercial"
             className="about__img"
             loading="lazy"

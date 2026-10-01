@@ -21,7 +21,9 @@ export default function Careers() {
         </div>
         <div className="careers__media reveal" data-reveal-delay="120">
           <img
-            src="/images/careers-equipo.jpg"
+            src="/images/careers-equipo.webp"
+            width="1200"
+            height="825"
             alt="Equipo de World Connection celebrando resultados"
             className="careers__img"
             loading="lazy"

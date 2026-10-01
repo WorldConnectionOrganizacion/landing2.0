@@ -24,7 +24,13 @@ export default function Navbar() {
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
         <Link to={navLinks[0].to} className="nav__brand" onClick={() => setOpen(false)}>
-          <img src="/logo-header.png" alt="World Connection" className="nav__brand-img" />
+          <img
+            src="/logo-header.png"
+            alt="World Connection"
+            className="nav__brand-img"
+            width="52"
+            height="52"
+          />
         </Link>
 
         <nav className={`nav__menu ${open ? 'is-open' : ''}`}>

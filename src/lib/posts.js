@@ -1,4 +1,5 @@
-import { supabase } from './supabase.js'
+// supabase-js se carga bajo demanda: no pesa en el JavaScript inicial de la página.
+const getSupabase = async () => (await import('./supabase.js')).supabase
 
 const CARD_FIELDS = 'id, slug, title, category, excerpt, cover_url, published_at, hidden_fields'
 
@@ -11,6 +12,7 @@ export function formatDate(iso) {
 }
 
 export async function fetchLatestPosts(limit = 6) {
+  const supabase = await getSupabase()
   if (!supabase) return []
   const { data, error } = await supabase
     .from('posts')
@@ -24,6 +26,7 @@ export async function fetchLatestPosts(limit = 6) {
 
 // Página `page` (desde 1) de noticias publicadas, más recientes primero.
 export async function fetchPostsPage(page, pageSize) {
+  const supabase = await getSupabase()
   if (!supabase) return { posts: [], total: 0 }
   const from = (page - 1) * pageSize
   const { data, error, count } = await supabase
@@ -42,6 +45,7 @@ export async function fetchPostsPage(page, pageSize) {
 
 // Devuelve null si no existe o no está publicada (RLS lo filtra).
 export async function fetchPostBySlug(slug) {
+  const supabase = await getSupabase()
   if (!supabase) return null
   const { data, error } = await supabase
     .from('posts')
