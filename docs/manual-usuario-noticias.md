@@ -283,7 +283,7 @@ Por eso:
 
 ### Cómo funciona
 
-Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo** (o se usa un reel de **Instagram** ya publicado), y en la noticia se pega el **link**. Así el sitio no se hace lento y no ocupa espacio propio.
+Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo** (o se usa un reel de **Instagram** o una publicación de **LinkedIn** ya publicada), y en la noticia se pega el **link**. Así el sitio no se hace lento y no ocupa espacio propio.
 
 ### Plataformas compatibles
 
@@ -292,6 +292,7 @@ Los videos **no se suben al panel**. Se suben primero a **YouTube** o **Vimeo** 
 | **YouTube** | `https://www.youtube.com/watch?v=XXXX`<br>`https://youtu.be/XXXX`<br>`https://www.youtube.com/shorts/XXXX` | Video incrustado |
 | **Vimeo** | `https://vimeo.com/123456789` | Video incrustado |
 | **Instagram** | `https://www.instagram.com/reel/XXXX/`<br>`https://www.instagram.com/p/XXXX/`<br>`https://www.instagram.com/tv/XXXX/` | Publicación incrustada (ver más abajo) |
+| **LinkedIn** | `https://www.linkedin.com/posts/...-activity-123...`<br>`https://www.linkedin.com/feed/update/urn:li:share:123...` | Publicación incrustada (ver más abajo) |
 | Otras (Facebook, TikTok, Drive, etc.) | Cualquier link `https://...` | **Solo un botón "Ver video"** que abre el link en otra pestaña |
 
 El link debe empezar con `https://`.
@@ -311,6 +312,22 @@ Tené en cuenta:
 - Un link a un **perfil** (por ejemplo `instagram.com/worldconnection`) no se puede incrustar: hace falta el link de un reel o una publicación concreta. En ese caso se mostrará solo el botón "Ver video".
 - Las **historias** (stories) no se pueden incrustar.
 - Si Instagram cambia sus reglas o el visitante tiene bloqueadores de contenido, la tarjeta puede no cargar. Si el video es importante, subilo además a YouTube.
+
+### Videos de LinkedIn
+
+Se pueden usar publicaciones de LinkedIn que tengan un video (por ejemplo, las de la página de la empresa). Funcionan así:
+
+1. En LinkedIn, abrí la publicación, tocá los tres puntos (**…**) y elegí **Copiar enlace de la publicación**.
+2. En la noticia, tocá **+ Video** y pegá el link.
+3. En la web se muestra la **tarjeta de LinkedIn** con el video, centrada, en formato vertical (hasta 504 px de ancho y 716 px de alto).
+
+Tené en cuenta:
+
+- La publicación tiene que ser **pública**. Si la publicó un perfil o una página con visibilidad restringida, el visitante verá un error o un pedido de inicio de sesión.
+- Sirve el link **completo** de la publicación. Los links acortados (`lnkd.in/...`) y los de un perfil o una página (`linkedin.com/company/...`) **no se pueden incrustar**: en ese caso se muestra solo el botón "Ver video".
+- Si el link completo no funciona, en LinkedIn podés usar los tres puntos, **Insertar esta publicación**, y copiar solo la dirección que aparece dentro del código (la que empieza con `https://www.linkedin.com/embed/feed/update/...`) para pegarla en el panel.
+- LinkedIn controla el diseño de la tarjeta. Un bloqueador de contenido del visitante puede impedir que cargue.
+- Los videos subidos directamente a LinkedIn **solo se pueden mostrar a través de su publicación**. No existe un link propio del archivo de video.
 
 ### Cómo cargar un video paso a paso
 
@@ -491,7 +508,7 @@ Por eso:
 | Apagué un campo y en la web se sigue viendo | No se guardó | Tocá **Guardar** y recargá la página con `Ctrl + F5` |
 | Un campo aparece gris y no puedo escribir | Su interruptor está en "Oculto" | Encendelo ("Se muestra") para editarlo |
 | Una tarjeta se ve con mucho espacio en blanco | Tiene casi todo oculto; las tarjetas de una fila igualan su altura | Es lo esperado; mostrá más partes o aceptalo |
-| "Link no reconocido" en un video | El link no es de YouTube, Vimeo ni Instagram, o es el de un perfil | Usá el link de un video o reel concreto, o aceptá que se muestre como botón |
+| "Link no reconocido" en un video | El link no es de YouTube, Vimeo, Instagram ni LinkedIn, es el de un perfil o página, o es un link acortado (`lnkd.in`) | Usá el link de un video o reel concreto, o aceptá que se muestre como botón |
 | El reel de Instagram pide iniciar sesión o da error | La cuenta es privada o la publicación se borró | Verificá que la cuenta sea pública, o subí el video a YouTube |
 | El video incrustado muestra error | El video es privado o no permite incrustarse | Cambiá su visibilidad a Público o No listado y revisá que permita incrustar |
 | Guardé pero en el sitio no aparece | Está como borrador, o el navegador guarda una copia vieja | Marcá **Publicada**. Recargá con `Ctrl + F5` |
@@ -511,7 +528,7 @@ Por eso:
 - **No hay programación de publicaciones** (fecha y hora futura automática).
 - **Solo se pueden ocultar** categoría, fecha, extracto, portada y bloques. El título no.
 - **El texto es plano:** sin negritas, títulos internos ni links clickeables.
-- **No se suben archivos de video**, solo links de YouTube, Vimeo o Instagram (otras plataformas se muestran como botón).
+- **No se suben archivos de video**, solo links de YouTube, Vimeo, Instagram o LinkedIn (otras plataformas se muestran como botón).
 - **No hay comentarios de los visitantes** en las noticias.
 - **Límites técnicos:** título 200 caracteres, extracto 500, categoría 40, pie de imagen 300, texto 20.000 por bloque, hasta 100 bloques por noticia, imágenes de hasta 5 MB.
 
@@ -595,7 +612,7 @@ Para exponerlo en la red local: `npm run dev -- --host`.
 **Cifras clave**
 
 - Imágenes: **JPG, PNG, WebP o GIF, hasta 5 MB**. Portada **1600 × 900 px** horizontal. Ideal menos de **500 KB**.
-- Videos: **link de YouTube, Vimeo o Instagram (reel o publicación pública)**, video público o no listado, **MP4 H.264 1080p 16:9**.
+- Videos: **link de YouTube, Vimeo, Instagram o LinkedIn (publicación pública)**, video público o no listado, **MP4 H.264 1080p 16:9**.
 - Se pueden ocultar por noticia: **categoría, fecha, extracto, portada y cada bloque**. El título no.
 - Carrusel de inicio: **6 noticias más recientes**. Listado: **9 por página**.
 - Sesión: **8 horas**. Bloqueo por intentos fallidos: **15 minutos**.

@@ -36,6 +36,13 @@ function Block({ block }) {
         </div>
       )
     }
+    if (embed?.kind === 'linkedin') {
+      return (
+        <div className="post__li">
+          <iframe src={embed.src} title="Publicación de LinkedIn" loading="lazy" allowFullScreen />
+        </div>
+      )
+    }
     return embed ? (
       <div className="post__video">
         <iframe

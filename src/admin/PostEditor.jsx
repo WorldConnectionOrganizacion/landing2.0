@@ -274,7 +274,7 @@ export default function PostEditor() {
                 type="url"
                 value={b.url}
                 onChange={(e) => setBlock(b._key, { url: e.target.value })}
-                placeholder="Link de YouTube, Vimeo o Instagram (https://…)"
+                placeholder="Link de YouTube, Vimeo, Instagram o LinkedIn (https://…)"
               />
               {b.url && !toEmbedUrl(b.url) && (
                 <p className="adm-muted">Link no reconocido: se mostrará como botón "Ver video".</p>

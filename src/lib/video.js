@@ -1,5 +1,5 @@
-// Interpreta un link de YouTube/Vimeo/Instagram. Devuelve { src, kind } o null si no se reconoce.
-// kind: 'video' (16:9) | 'instagram' (vertical, tarjeta de Instagram).
+// Interpreta un link de YouTube/Vimeo/Instagram/LinkedIn. Devuelve { src, kind } o null si no se reconoce.
+// kind: 'video' (16:9) | 'instagram' | 'linkedin' (tarjetas verticales de cada red).
 const video = (src) => ({ src, kind: 'video' })
 
 export function parseEmbed(raw) {
@@ -33,6 +33,16 @@ export function parseEmbed(raw) {
     if (!m) return null
     const type = m[1] === 'reels' ? 'reel' : m[1]
     return { src: `https://www.instagram.com/${type}/${m[2]}/embed/`, kind: 'instagram' }
+  }
+  if (host === 'linkedin.com') {
+    // Publicación con video: /posts/usuario_texto-activity-123…-xxxx, /feed/update/urn:li:share:123…
+    // o el link de /embed/feed/update/urn:li:… que da LinkedIn en "Insertar esta publicación".
+    const path = decodeURIComponent(u.pathname)
+    const m =
+      path.match(/urn:li:(share|ugcPost|activity):(\d+)/) ||
+      path.match(/-(share|ugcPost|activity)-(\d+)/)
+    if (!m) return null
+    return { src: `https://www.linkedin.com/embed/feed/update/urn:li:${m[1]}:${m[2]}`, kind: 'linkedin' }
   }
   return null
 }
