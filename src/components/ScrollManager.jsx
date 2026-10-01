@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 // Scroll al hash (#seccion) o al tope en cada cambio de ruta.
 export default function ScrollManager() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
 
   useEffect(() => {
     if (!hash) {
@@ -15,7 +15,7 @@ export default function ScrollManager() {
       document.getElementById(id)?.scrollIntoView()
     }, 0)
     return () => clearTimeout(t)
-  }, [pathname, hash])
+  }, [pathname, hash, key])
 
   return null
 }
