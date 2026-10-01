@@ -18,6 +18,7 @@ Guía completa para cargar, editar y borrar noticias en el sitio de World Connec
 11. [Limpieza de imágenes sin usar](#11-limpieza-de-imágenes-sin-usar)
 12. [Dónde se ven las noticias en el sitio](#12-dónde-se-ven-las-noticias-en-el-sitio)
 13. [Buenas prácticas de redacción](#13-buenas-prácticas-de-redacción)
+    - [Cómo se ve en Google y en redes](#cómo-se-ve-en-google-y-en-redes)
 14. [Problemas frecuentes](#14-problemas-frecuentes)
 15. [Límites y cosas que el panel no hace](#15-límites-y-cosas-que-el-panel-no-hace)
 16. [Para quien administra el sistema](#16-para-quien-administra-el-sistema)
@@ -438,12 +439,32 @@ De arriba hacia abajo: link "← Todas las noticias", etiqueta de categoría, t�
 - **Imágenes:** una buena portada y, si corresponde, una o dos fotos dentro del texto. No hace falta llenar de imágenes.
 - **Categorías consistentes:** usá pocas y siempre las mismas.
 
+### Cómo se ve en Google y en redes
+
+Cada noticia genera sola su ficha para buscadores y para las vistas previas de WhatsApp, Facebook, LinkedIn y similares. No hay que configurar nada, pero lo que escribas la define:
+
+| Qué ves | De dónde sale |
+|---|---|
+| Título azul en Google y título de la vista previa | El **título** de la noticia, más "| World Connection". Conviene que tenga **menos de 60 caracteres** para que no se corte |
+| Descripción bajo el título | El **extracto**; si está vacío, las primeras palabras del **primer bloque de texto**. Google muestra unos **150 a 160 caracteres** |
+| Imagen de la vista previa en redes | La **portada**. Si la portada está oculta o no hay, se usa el logo de World Connection |
+| Fecha | La **fecha de publicación** |
+
+Por eso:
+
+- **Completá siempre el extracto** con una frase clara que invite a leer; es lo que más pesa en el clic.
+- **Poné una portada horizontal** (16:9): es la que aparece al compartir el link.
+- **Ocultar el extracto con el interruptor solo lo oculta a los visitantes en la web:** Google lo sigue usando como descripción. Si no querés que figure, dejá el campo vacío. Los bloques de texto ocultos, en cambio, nunca se usan.
+- Las noticias **borrador** no aparecen en Google. Al publicarlas, se agregan solas al mapa del sitio.
+- Google puede tardar **desde unos días hasta un par de semanas** en mostrar una noticia nueva. Para acelerarlo, quien administra puede pedir la indexación en Search Console.
+
 ### Lista de control antes de publicar
 
 - [ ] El título es claro y no está cortado.
 - [ ] La categoría está bien escrita.
 - [ ] La fecha es correcta.
-- [ ] Hay un extracto de 100 a 160 caracteres.
+- [ ] Hay un extracto de 100 a 160 caracteres (es la descripción en Google).
+- [ ] El título tiene menos de 60 caracteres.
 - [ ] La portada es horizontal y lo importante está al centro.
 - [ ] Las imágenes pesan menos de 500 KB (idealmente).
 - [ ] Los videos son públicos o no listados, no privados.
@@ -511,6 +532,7 @@ Se definen como variables de entorno (en `.env.local` para desarrollo local y en
 | `VITE_SUPABASE_URL` | URL del proyecto de Supabase |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Clave pública de Supabase (`sb_publishable_...`) |
 | `SUPABASE_SECRET_KEY` | Clave secreta de Supabase (`sb_secret_...`). **Nunca** debe compartirse ni subirse al repositorio |
+| `VITE_SITE_URL` | **Dirección pública del sitio** sin barra final (ej. `https://wconnectionarg.com`). La usan el `canonical`, el mapa del sitio y las vistas previas en redes. Debe coincidir con el dominio principal |
 | `VITE_WEB3FORMS_KEY` | (Opcional, no es de noticias) Clave del formulario de contacto |
 
 Reglas:
@@ -532,6 +554,17 @@ Reglas:
 - El panel lleva `noindex` (etiqueta y cabecera `X-Robots-Tag`), así que los buscadores no lo indexan.
 - Todas las operaciones de escritura (`/api/posts`, `/api/upload`, `/api/cleanup`) exigen la sesión de administrador y validan el contenido en el servidor.
 - Las funciones del panel están en la carpeta `api/`, y `vercel.json` redirige el resto de las rutas a la aplicación.
+
+### SEO y posicionamiento
+
+- El sitio genera solo `robots.txt` y `sitemap.xml` (con todas las noticias publicadas). El mapa está en `/sitemap.xml`.
+- La home y `/noticias` se **pre-renderizan** al compilar: llegan a los buscadores con el contenido escrito. Cada noticia se sirve con su título, descripción, imagen y datos estructurados reales (función `api/news-meta`), y devuelve **404 real** si no existe.
+- Las rutas inexistentes responden con estado 404 y `noindex`.
+- Pasos fuera del código, necesarios para aparecer en Google:
+  1. **Dominio principal:** que `wconnectionarg.com` sirva el sitio y que `world-connection.vercel.app` redirija a él (en Vercel, Settings, Domains). Después actualizar `VITE_SITE_URL` y redesplegar.
+  2. **Google Search Console:** verificar el dominio, enviar `https://TU-DOMINIO/sitemap.xml` y pedir la indexación de la página de inicio.
+  3. **Google Business Profile:** crear la ficha de la oficina (Av. San Martín 1425, Mendoza) con los mismos datos que muestra el sitio.
+  4. Incluir el link del sitio en los perfiles de LinkedIn e Instagram.
 
 ### Ejecutar en local
 ```bash

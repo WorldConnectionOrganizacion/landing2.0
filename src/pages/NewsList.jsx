@@ -3,9 +3,9 @@ import { useSearchParams } from 'react-router-dom'
 import { fetchPostsPage } from '../lib/posts.js'
 import NewsCard from '../components/NewsCard.jsx'
 import Pagination from '../components/Pagination.jsx'
+import useSeo from '../hooks/useSeo.js'
 
 const PAGE_SIZE = 9
-const DEFAULT_TITLE = 'World Connection | Telecomunicaciones y Gestión Comercial'
 
 export default function NewsList() {
   const [params, setParams] = useSearchParams()
@@ -20,10 +20,11 @@ export default function NewsList() {
 
   const goTo = (n) => setParams(n > 1 ? { pagina: String(n) } : {})
 
-  useEffect(() => {
-    document.title = 'Noticias | World Connection'
-    return () => { document.title = DEFAULT_TITLE }
-  }, [])
+  useSeo({
+    title: page > 1 ? `Noticias (página ${page}) | World Connection Mendoza` : 'Noticias | World Connection Mendoza',
+    description:
+      'Novedades, comunicados y noticias de World Connection: telecomunicaciones y gestión comercial multicanal en Mendoza, Argentina.',
+  })
 
   useEffect(() => {
     let active = true

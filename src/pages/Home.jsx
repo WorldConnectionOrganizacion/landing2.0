@@ -11,9 +11,11 @@ import History from '../components/History.jsx'
 import News from '../components/News.jsx'
 import Contact from '../components/Contact.jsx'
 import useScrollReveal from '../hooks/useScrollReveal.js'
+import useSeo from '../hooks/useSeo.js'
 
 export default function Home() {
   useScrollReveal()
+  useSeo()
   return (
     <main>
       <Hero />

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPostBySlug, formatDate } from '../lib/posts.js'
 import { parseEmbed } from '../lib/video.js'
+import useSeo from '../hooks/useSeo.js'
+import { DEFAULT_IMAGE, SITE_NAME, SITE_URL } from '../lib/site.js'
 
 function Block({ block }) {
   if (block.hidden) return null
@@ -55,15 +57,54 @@ function Block({ block }) {
   return null
 }
 
-const DEFAULT_TITLE = 'World Connection | Telecomunicaciones y Gestión Comercial'
+
+// Datos SEO de una noticia: descripción (extracto o primer texto), imagen y NewsArticle.
+function postSeo(post, status) {
+  if (status === 'notfound' || status === 'error') {
+    return { title: `Noticia no encontrada | ${SITE_NAME}`, noindex: true }
+  }
+  if (!post) return { title: `Noticias | ${SITE_NAME}` }
+
+  const hidden = post.hidden_fields || []
+  const firstText = (post.blocks || []).find((b) => b.type === 'text' && !b.hidden && b.text)?.text
+  const description = post.excerpt || firstText || undefined
+  const image = post.cover_url && !hidden.includes('cover') ? post.cover_url : DEFAULT_IMAGE
+  const url = `${SITE_URL}/noticias/${post.slug}`
+
+  return {
+    title: `${post.title} | ${SITE_NAME}`,
+    description,
+    image,
+    type: 'article',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: post.title.slice(0, 110),
+      description,
+      image: [image],
+      datePublished: post.published_at,
+      dateModified: post.updated_at || post.published_at,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo-header.png` },
+      },
+    },
+  }
+}
 
 export default function NewsPost() {
   const { slug } = useParams()
   const [post, setPost] = useState(null)
   const [status, setStatus] = useState('loading') // loading | ready | notfound | error
 
+  useSeo(postSeo(post, status))
+
   useEffect(() => {
     setStatus('loading')
+    setPost(null)
     let active = true
     fetchPostBySlug(slug)
       .then((data) => {
@@ -71,13 +112,9 @@ export default function NewsPost() {
         if (!data) return setStatus('notfound')
         setPost(data)
         setStatus('ready')
-        document.title = `${data.title} | World Connection`
       })
       .catch(() => active && setStatus('error'))
-    return () => {
-      active = false
-      document.title = DEFAULT_TITLE
-    }
+    return () => { active = false }
   }, [slug])
 
   if (status !== 'ready') {

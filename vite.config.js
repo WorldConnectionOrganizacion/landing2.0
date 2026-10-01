@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+import seo from './vite-plugins/seo.js'
 
 // En desarrollo, sirve las funciones de /api con el mismo contrato que Vercel
 // (req.body parseado, res.status().json()), sin necesitar `vercel dev`.
@@ -43,5 +44,5 @@ function devApi(env) {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  return { plugins: [react(), devApi(env)] }
+  return { plugins: [react(), seo(env), devApi(env)] }
 })

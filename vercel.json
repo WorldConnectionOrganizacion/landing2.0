@@ -1,5 +1,10 @@
 {
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/noticias/:slug", "destination": "/api/news-meta?slug=:slug" },
+    { "source": "/paginas-admin", "destination": "/app-shell.html" },
+    { "source": "/paginas-admin/:path*", "destination": "/app-shell.html" }
+  ],
   "headers": [
     {
       "source": "/paginas-admin(.*)",

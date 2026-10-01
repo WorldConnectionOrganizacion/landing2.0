@@ -42,7 +42,14 @@ export default function Hero() {
 
         <div className="hero__visual" aria-hidden="true">
           <div className="hero__card hero__card--main">
-            <img src="/logoGrande.jpeg" alt="World Connection" className="hero__logo-img" />
+            <img
+              src="/logoGrande.webp"
+              alt="World Connection"
+              className="hero__logo-img"
+              width="800"
+              height="1000"
+              fetchPriority="high"
+            />
           </div>
           <div className="hero__card hero__card--float">
             <span className="hero__chip">📈 Crecimiento sostenido</span>
