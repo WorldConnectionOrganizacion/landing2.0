@@ -2,7 +2,8 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/noticias/:slug", "destination": "/api/news-meta?slug=:slug" },
-    { "source": "/((?!api/).*)", "destination": "/app-shell.html" }
+    { "source": "/paginas-admin", "destination": "/app-shell.html" },
+    { "source": "/paginas-admin/:path*", "destination": "/app-shell.html" }
   ],
   "headers": [
     {

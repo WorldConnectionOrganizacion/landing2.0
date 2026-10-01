@@ -29,6 +29,12 @@ const pages = [
   },
 ]
 
+// 404.html: Vercel lo sirve con estado 404 real para cualquier ruta inexistente.
+fs.writeFileSync(
+  path.join(dist, '404.html'),
+  applyHead(template, { title: 'Página no encontrada | World Connection', noindex: true })
+)
+
 for (const page of pages) {
   let html = template.replace('<div id="root"></div>', `<div id="root">${render(page.url)}</div>`)
 

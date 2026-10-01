@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import WhatsAppButton from './components/WhatsAppButton.jsx'
@@ -7,6 +7,7 @@ import ScrollManager from './components/ScrollManager.jsx'
 import Home from './pages/Home.jsx'
 import NewsList from './pages/NewsList.jsx'
 import NewsPost from './pages/NewsPost.jsx'
+import NotFound from './pages/NotFound.jsx'
 import './App.css'
 
 // El panel se carga aparte: no pesa en la landing pública.
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/noticias" element={<NewsList />} />
         <Route path="/noticias/:slug" element={<NewsPost />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route
         path="/paginas-admin/*"

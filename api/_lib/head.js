@@ -45,7 +45,7 @@ export function applyHead(html, { title, description, canonical, image, type, js
   if (type) out = setMeta(out, 'property', 'og:type', type)
 
   const extra = []
-  if (noindex) extra.push('<meta name="robots" content="noindex, follow" />')
+  if (noindex) extra.push('<meta name="robots" content="noindex, follow" data-seo />')
   if (jsonLd) extra.push(`<script type="application/ld+json" id="ld-page">${safeJson(jsonLd)}</script>`)
   if (extra.length) out = out.replace('</head>', () => `    ${extra.join('\n    ')}\n  </head>`)
   if (noscript) out = out.replace('<div id="root">', () => `<noscript>${noscript}</noscript>\n    <div id="root">`)
