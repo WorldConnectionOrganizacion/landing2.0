@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { createClient } from '@supabase/supabase-js'
 import { applyHead, escText, trimText } from './_lib/head.js'
 import { siteUrl } from './_lib/site.js'
@@ -14,9 +16,15 @@ export default async function handler(req, res) {
 
   let shell
   try {
-    const r = await fetch(`${proto}://${host}/app-shell.html`)
-    if (!r.ok) throw new Error(`shell ${r.status}`)
-    shell = await r.text()
+    // Con server.js (Railway) el build está en disco; en Vercel no, y se pide por HTTP.
+    const local = path.join(process.cwd(), 'dist', 'app-shell.html')
+    if (fs.existsSync(local)) {
+      shell = fs.readFileSync(local, 'utf8')
+    } else {
+      const r = await fetch(`${proto}://${host}/app-shell.html`)
+      if (!r.ok) throw new Error(`shell ${r.status}`)
+      shell = await r.text()
+    }
   } catch (err) {
     console.error('news-meta: no se pudo leer el shell', err)
     res.status(500).setHeader('Content-Type', 'text/plain; charset=utf-8')
